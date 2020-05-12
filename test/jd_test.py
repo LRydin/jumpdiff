@@ -22,7 +22,7 @@ def test_jdprocess():
         lamb = 1.25
 
         # and simply call the integration function
-        X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
+        X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
         if not isinstance(X, np.ndarray):
             raise Exception('Results is not an array')
