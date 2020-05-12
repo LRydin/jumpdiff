@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/LRydin/JumpDiff/branch/master/graph/badge.svg)](https://codecov.io/gh/LRydin/JumpDiff)
 
 # JumpDiff
 `JumpDiff` is a `python` library with non-parametric Nadaraya─Watson estimators to extract the parameters of jump-diffusion processes.
