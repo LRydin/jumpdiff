@@ -15,8 +15,9 @@ from .binning import histogramdd
 from .kernels import silvermans_rule, epanechnikov, _kernels
 
 def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
-        lag: list=[1], corrections: bool=True, kernel: callable=None,
-        bw: float=None, tol: float=1e-10, conv_method: str='auto'):
+        lag: list=[1], corrections: bool=True, norm: bool=False,
+        kernel: callable=None, bw: float=None, tol: float=1e-10,
+        conv_method: str='auto'):
     """
     Estimates the moments of the Kramers─Moyal expansion from a timeseries using
     a Nadaraya─Watson kernel estimator method. These later can be turned into
@@ -43,6 +44,10 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
     corrections: bool
         Implements the second-order corrections of the Kramers─Moyal conditional
         moments directly
+
+    norm: bool
+        Sets the normalisation. 'False' returns the Kramers─Moyal conditional
+        moments, and 'True' returns the Kramers─Moyal coefficients.
 
     kernel: callable
         Kernel used to convolute with the Kramers─Moyal conditional moments. To
@@ -116,7 +121,12 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
     edges, moments =  _moments(timeseries, bins, powers, lag, kernel, bw, tol, conv_method)
 
     if corrections == True:
-        moments = second_order_corrections(m = moments, power = power)
+        moments = corrections(m = moments, power = power)
+
+    if norm == True:
+        for i in range(power):
+            moments = moments / float(factorial(i))
+
 
     return (edges, moments) if not trim_output else (edges, moments[1:,...])
 
@@ -186,11 +196,16 @@ def _moments(timeseries: np.ndarray, bins: np.ndarray, powers: np.ndarray,
         moments[..., i] = kmc
         edge_[...,i] = [edge[:-1] + 0.5*(edge[1] - edge[0]) for edge in edges][0]
 
+
     return edge_, moments
 
-def second_order_corrections(m, power):
+def corrections(m, power, norm: bool=False):
     """
-    Second-order corrections of the Kramers─Moyal conditional moments, given by
+    The moments function will by default apply the corrections. You can turn
+    the corrections off in that fuction by setting 'corrections = False'.
+
+    Second-order corrections of the Kramers─Moyal coefficients (conditional
+    moments), given by
 
         F₁ =       M₁
         F₂ =   1/2(M₂ - M₁²)
@@ -200,6 +215,10 @@ def second_order_corrections(m, power):
         F₆ = 1/720(M₆ - 6M₁M₅ + 45M₁²M₄ - 300M₁³M₃ + 1575M₁⁴M₂ - 675M₁²M₂²
                     + 180M₁M₂M₃ + 45M₂³ - 15M₂M₄ - 10M₃² - 945M₁⁶)
 
+    with the prefactor the normalisation, i.e., the normalised results are the
+    Kramers─Moyal coefficients. If 'norm' is False, this results in the
+    Kramers─Moyal conditional moments.
+
     Parameters
     ----------
     m (moments): np.ndarray
@@ -208,7 +227,7 @@ def second_order_corrections(m, power):
         moments[i,:,j], with i the order according to powers, j the lag.
 
     power: int
-        Upper limit of the the Kramers─Moyal conditional moments to calculate.
+        Upper limit of the Kramers─Moyal conditional moments to calculate.
         It will generate all Kramers─Moyal conditional moments up to power.
 
     Returns
@@ -224,27 +243,28 @@ def second_order_corrections(m, power):
     if len(powers.shape) == 1:
         powers = powers.reshape(-1, 1)
 
-    norm = np.array([1,1,1/2,1/6,1/24,1/120,1/720])
+    # remnant of the normalisation factor, moved to 'moments'
+    normalise = np.ones_like(powers)
 
     F = np.zeros_like(m)
 
     if 0 in powers:
-        F[0] = norm[0] * m[0]
+        F[0] = normalise[0] * m[0]
     if 1 in powers:
-        F[1] = norm[1] * m[1]
+        F[1] = normalise[1] * m[1]
     if 2 in powers:
-        F[2] = norm[2] * ( m[2] - (m[1]**2) )
+        F[2] = normalise[2] * ( m[2] - (m[1]**2) )
     if 3 in powers:
-        F[3] = norm[3] * ( m[3] - 3*m[1]*m[2] + 3*(m[1]**3) )
+        F[3] = normalise[3] * ( m[3] - 3*m[1]*m[2] + 3*(m[1]**3) )
     if 4 in powers:
-        F[4] = norm[4] * ( m[4] - 4*m[1]*m[3] + 18*(m[1]**2)*m[2] \
+        F[4] = normalise[4] * ( m[4] - 4*m[1]*m[3] + 18*(m[1]**2)*m[2] \
             - 3*m[2]**2 - 15*(m[1]**4) )
     if 5 in powers:
-        F[5] = norm[5] * ( m[5] - 5*m[1]*m[4] + 30*(m[1]**2)*m[3] \
+        F[5] = normalise[5] * ( m[5] - 5*m[1]*m[4] + 30*(m[1]**2)*m[3] \
             - 150*(m[1]**3)*m[2] + 45*m[1]*(m[2]**2) - 10*m[2]*m[3] \
             + 105*(m[1]**5) )
     if 6 in powers:
-        F[6] = norm[6] * ( m[6] - 6*m[1]*m[5] + 45*(m[1]**2)*m[4] \
+        F[6] = normalise[6] * ( m[6] - 6*m[1]*m[5] + 45*(m[1]**2)*m[4] \
             - 300*(m[1]**3)*m[3] + 1575*(m[1]**4)*m[2] \
             - 675*(m[1]**2)*(m[2]**2) + 180*m[1]*m[2]*m[3] \
             + 45*(m[3]**3) - 15*m[2]*m[4] - 10*(m[3]**2) \
