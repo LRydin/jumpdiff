@@ -2,27 +2,40 @@
 # Pedro G. Lind for direct application.
 
 import numpy as np
-from kramersmoyal import km, kernels
+from .moments import moments
 
-def Qratio(timeseries: np.ndarray, lag: np.ndarray, loc: float=None) -> np.ndarray:
+def Qratio(lag: np.ndarray, timeseries: np.ndarray, loc: int=None,
+        corrections: bool=False) -> np.ndarray:
     """
     Qratio method to distinguish pure diffusion from jump-diffusion timeseries,
-    introduced by K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar.
+    Given by the relation of the 4th and 6th Kramers─Moyal coefficient with
+    increasing lag
+
+                      D₆(x,τ)
+          Q(x,τ) =  ─────────── ,
+                     5 D₄(x,τ)
+
+    introduced by K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar in
     'Characterizing abrupt transitions in stochastic dynamics'. New Journal of
     Physics, 20(11):113043, 2018, doi: 10.1088/1367-2630/aaf0d7.
 
     Parameters
     ----------
-    timeseries: np.ndarray
-        A 1-dimensional timeseries (N, 1). The timeseries of length N.
-
     lag: np.ndarray of ints
         An array with the time-lag to extract the Kramers–Moyal coefficient for
         different lags.
 
+    timeseries: np.ndarray
+        A 1-dimensional timeseries (N, 1). The timeseries of length N.
+
     loc: float
         Use a particular point in space to calculate the ratio. If none given,
         the maximum of the probability density function is taken.
+
+    corrections: bool
+        Implements the second-order corrections of the Kramers─Moyal conditional
+        moments directly. Default 'False', since the Q-ratio is only proven at
+        first-order.
 
     Returns
     -------
@@ -33,25 +46,21 @@ def Qratio(timeseries: np.ndarray, lag: np.ndarray, loc: float=None) -> np.ndarr
         Ratio of the sixth-order over forth-order Kramers–Moyal coefficient.
     """
 
-    # Force lag to be ints, ensure lag > order + 1
+    # Force lag to be ints, ensure lag > order + 1, and removes duplicates
     lag = lag[lag > 0]
-    lag = np.round(lag).astype(int)
+    lag = np.round(np.unique(lag)).astype(int)
 
     # Assert if timeseries is 1 dimensional
     if timeseries.ndim > 1:
         assert timeseries.shape[1] == 1, "Timeseries needs to be 1 dimensional"
 
-    # Initialise function
-    ratio = np.zeros(lag.size)
-
-    # Find maxixum of distribution
+    # Find maximum of distribution
     if loc == None:
-        temp, _ = km(timeseries, powers=np.array([[0]]), bins=np.array([5000]))
+        temp = moments(timeseries, power=0, bins=np.array([5000]))[1]
         loc = np.argmax(temp[0])
 
-    for i in range(lag.size):
-        temp, _ = km(timeseries[::lag[i]], powers=np.array([[4],[6]]),
-                     bins=np.array([5000]))
-        ratio[i] = temp[1][loc] / (5 * temp[0][loc])
+    temp = moments(timeseries, power=6, bins=np.array([5000]), lag = lag,
+        corrections = corrections)[1]
+    ratio = temp[6,loc,:]/(5 * temp[4,loc,:])
 
     return lag, ratio
