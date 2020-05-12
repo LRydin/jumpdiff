@@ -90,16 +90,11 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
         bins = np.array([5000])
 
     if lag is None:
-        lag = list(np.linspace(1,10,10).astype(int))
+        lag = [1]
 
     powers = np.linspace(0,power,power+1).astype(int)
     if len(powers.shape) == 1:
         powers = powers.reshape(-1, 1)
-
-    trim_output = False
-    if not (powers[0] == [0] * dims).all():
-        powers = np.array([[0] * dims, *powers])
-        trim_output = True
 
     assert (powers[0] == [0] * dims).all(), "First power must be zero"
     assert dims == powers.shape[1], "Powers not matching timeseries' dimension"
@@ -125,7 +120,7 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
             moments = moments / float(factorial(i))
 
 
-    return (edges, moments) if not trim_output else (edges, moments[1:,...])
+    return (edges, moments)
 
 
 def _moments(timeseries: np.ndarray, bins: np.ndarray, powers: np.ndarray,

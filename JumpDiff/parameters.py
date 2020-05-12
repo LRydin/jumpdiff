@@ -45,13 +45,11 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
 
         temp = (moments[6,~mask,i]) / (5 * moments[4,~mask,i])
 
-        xi_est[i] = np.average(temp, weights = np.sqrt(moments[0,~mask,i]))
-        # xi_est[i] = np.average(temp)
+        xi_est[i] = np.average(temp, weights = moments[0,~mask,i])
 
         if full == True:
             xi_est_std[i] = np.average((temp-xi_est[i])**2,
                                 weights = moments[0,~mask,i])
-
 
     if full == True:
         return xi_est, xi_est_std
@@ -102,8 +100,7 @@ def jump_rate(moments: np.ndarray, xi_est: np.array, tol: float=1e-10,
 
         temp = (moments[4,~mask,i]) / (3 * (xi_est[i]**2) )
 
-        lamb_est[i] = np.average(temp,  weights = np.sqrt(moments[0,~mask,i]))
-        # lamb_est[i] = np.average(temp)
+        lamb_est[i] = np.average(temp, weights = moments[0,~mask,i])
 
         if full == True:
             lamb_est_std[i] = np.average((temp-lamb_est[i])**2,
