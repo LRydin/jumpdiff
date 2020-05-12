@@ -15,7 +15,7 @@ from .binning import histogramdd
 from .kernels import silvermans_rule, epanechnikov, _kernels
 
 def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
-        lag: list=[1], corrections: bool=True, norm: bool=False,
+        lag: list=[1], correction: bool=True, norm: bool=False,
         kernel: callable=None, bw: float=None, tol: float=1e-10,
         conv_method: str='auto'):
     """
@@ -86,6 +86,12 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
 
     n, dims = timeseries.shape
 
+    if bins is None:
+        bins = np.array([5000])
+
+    if lag is None:
+        lag = list(np.linspace(1,10,10).astype(int))
+
     powers = np.linspace(0,power,power+1).astype(int)
     if len(powers.shape) == 1:
         powers = powers.reshape(-1, 1)
@@ -99,17 +105,8 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
     assert dims == powers.shape[1], "Powers not matching timeseries' dimension"
     assert dims == bins.shape[0], "Bins not matching timeseries' dimension"
 
-    if bins is None:
-        bins = np.array([5000])
-
-    if lag is None:
-        lag = list(np.linspace(1,10,10).astype(int))
-
-    if powers is None:
-        powers = np.array([0],[1],[2],[3],[4])
-
     if bw is None:
-        bw = silvermans_rule(timeseries)
+        bw = silvermans_rule(timeseries)*2.
     elif callable(bw):
         bw = bw(timeseries)
     assert bw > 0.0, "Bandwidth must be > 0"
@@ -120,7 +117,7 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
 
     edges, moments =  _moments(timeseries, bins, powers, lag, kernel, bw, tol, conv_method)
 
-    if corrections == True:
+    if correction == True:
         moments = corrections(m = moments, power = power)
 
     if norm == True:

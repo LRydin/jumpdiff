@@ -17,7 +17,7 @@ def jdprocess(time: float, delta_t: float, a: callable, b: callable,
     This integrator has both an Euler─Mayurama and a Milstein method of
     integration. For Milstein one has to introduce the derivative of the
     diffusion term 'b', denoted 'b_prime'.
-    
+
     Parameters
     ----------
     time: float > 0
@@ -87,7 +87,7 @@ def jdprocess(time: float, delta_t: float, a: callable, b: callable,
     else:
         assert type(init) == int or type(init) == float, ("'init' is not an int"
             " or float")
-        X[0] = init
+        X[0] = float(init)
 
     # Generate the Gaussian noise
     dw = np.random.normal(loc = 0, scale = np.sqrt(delta_t), size = length)
