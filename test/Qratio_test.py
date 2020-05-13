@@ -25,8 +25,5 @@ def test_Qratio():
 
         _, ratio = Qratio(lag = lag, timeseries = X)
 
-        if not isinstance(ratio, np.ndarray):
-            raise Exception('Results is not an array')
-
-        if ratio.shape[0] != lag.shape[0]:
-            raise Exception('Length is not correct')
+        assert isinstance(ratio, np.ndarray)
+        assert ratio.shape[0] == lag.shape[0]

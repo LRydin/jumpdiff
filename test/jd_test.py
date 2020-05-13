@@ -21,8 +21,5 @@ def test_jdprocess():
         # and simply call the integration function
         X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
-        if not isinstance(X, np.ndarray):
-            raise Exception('Results is not an array')
-
-        if X.shape[0] != int(t_final/delta_t):
-            raise Exception('Length is not correct')
+        assert isinstance(X, np.ndarray)
+        assert X.shape[0] == int(t_final/delta_t)

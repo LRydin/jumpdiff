@@ -27,8 +27,5 @@ def test_parameters():
 
         lamb_est = jump_rate(moments = m, xi_est = xi)
 
-        if not isinstance(lamb_est, np.ndarray):
-            raise Exception('Results is not an array')
-
-        if not isinstance(xi_est, np.ndarray):
-            raise Exception('Results is not an array')
+        assert isinstance(lamb_est, np.ndarray)
+        assert isinstance(xi_est, np.ndarray)
