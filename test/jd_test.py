@@ -27,7 +27,7 @@ def test_jdprocess():
 
             if scheme == 'Milstein':
                 X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb,
-                        b_prime=b_prime, init= 0.)
+                        b_prime=b_prime, init= 0., solver = scheme)
 
             assert isinstance(X, np.ndarray)
             assert X.shape[0] == int(t_final/delta_t)
