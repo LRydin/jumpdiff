@@ -1,7 +1,7 @@
 import numpy as np
-from JumpDiff import Qratio, jdprocess
+from JumpDiff import jdprocess, jump_amplitude, jump_rate, moments
 
-def test_Qratio():
+def test_parameters():
     for delta in [1,0.1,0.01,0.001,0.0001]:
         t_final = 1000
         delta_t = delta
@@ -21,12 +21,14 @@ def test_Qratio():
         # and simply call the integration function
         X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
-        lag = np.unique(np.logspace(0, np.log10(int(t_final/delta_t) // 100), 200).astype(int)+1)
+        edges, moments = jd.moments(timeseries = X)
 
-        _, ratio = Qratio(lag = lag, timeseries = X)
+        xi_est = jd.jump_amplitude(moments = moments)
 
-        if not isinstance(ratio, np.ndarray):
+        lamb_est = jd.jump_rate(moments = moments, xi_est = xi)
+
+        if not isinstance(lamb_est, np.ndarray):
             raise Exception('Results is not an array')
 
-        if ratio.shape[0] != lag.shape[0]:
-            raise Exception('Length is not correct')
+        if not isinstance(xi_est, np.ndarray):
+            raise Exception('Results is not an array')

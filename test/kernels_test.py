@@ -17,4 +17,3 @@ def test_kernels():
                 passed = np.allclose(kernel_.sum() * dx, 1, atol=1e-2)
                 print("Kernel {0:10s}\t with {1:.2f} bandwidth at {2}D passed: {3}".format(
                     kernel.__name__, bw, dim, passed))
-            print()
