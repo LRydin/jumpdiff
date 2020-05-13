@@ -1,5 +1,5 @@
 import numpy as np
-from JumpDiff import jdprocess
+from JumpDiff import Qratio, jdprocess
 
 def test_jdprocess():
     for delta in [1,0.1,0.01,0.001,0.0001]:
@@ -21,8 +21,14 @@ def test_jdprocess():
         # and simply call the integration function
         X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
-        if not isinstance(X, np.ndarray):
+        lag = np.unique(np.logspace(0, np.log10(int(t_final/delta_t) // 100), 200).astype(int)+1)
+
+        _, ratio = Qratio(lag = lag, timeseries = X)
+
+        if not isinstance(ratio, np.ndarray):
             raise Exception('Results is not an array')
 
-        if X.shape[0] != int(t_final/delta_t):
+        if ratio.shape[0] != lag.shape[0]:
             raise Exception('Length is not correct')
+
+test_jdprocess()

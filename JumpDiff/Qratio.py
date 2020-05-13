@@ -5,7 +5,7 @@ import numpy as np
 from .moments import moments
 
 def Qratio(lag: np.ndarray, timeseries: np.ndarray, loc: int=None,
-        corrections: bool=False) -> np.ndarray:
+        correction: bool=True) -> np.ndarray:
     """
     Qratio method to distinguish pure diffusion from jump-diffusion timeseries,
     Given by the relation of the 4th and 6th Kramers─Moyal coefficient with
@@ -60,7 +60,7 @@ def Qratio(lag: np.ndarray, timeseries: np.ndarray, loc: int=None,
         loc = np.argmax(temp[0])
 
     temp = moments(timeseries, power=6, bins=np.array([5000]), lag = lag,
-        corrections = corrections)[1]
+        correction = correction)[1]
     ratio = temp[6,loc,:]/(5 * temp[4,loc,:])
 
     return lag, ratio
