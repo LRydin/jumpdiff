@@ -15,6 +15,3 @@ def test_kernels():
                 kernel_ = kernel(mesh, bw=bw).reshape(
                     *(edge.size for edge in edges))
                 assert np.allclose(kernel_.sum() * dx, 1, atol=1e-2)
-
-
-test_kernels()
