@@ -36,7 +36,7 @@ def F_formula_solver(power):
     power = power + 1
     terms_to_sub = []
     for i in range(1, power):
-        terms_to_sub += [F_formula_gen(i)]
+        terms_to_sub += [F_formula(i)]
         for j in range(i):
             terms_to_sub[i-1] = terms_to_sub[i-1].subs('D'+str(j+1),terms_to_sub[j])
 
