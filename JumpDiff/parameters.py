@@ -5,7 +5,7 @@
 import numpy as np
 
 def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
-        full: bool=False) -> np.ndarray:
+        full: bool=False, verbose: bool=True) -> np.ndarray:
     """
     Retrieves the jump amplitude xi (ξ) via
 
@@ -34,10 +34,9 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
         Estimator of the jump amplitude xi (ξ).
     """
 
+    # pre-allocate variable
     xi_est = np.zeros(moments.shape[2])
-
-    if full == True:
-        xi_est_std = np.zeros(moments.shape[2])
+    xi_est_std = np.zeros(moments.shape[2])
 
 
     for i in range(moments.shape[2]):
@@ -47,9 +46,11 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
 
         xi_est[i] = np.average(temp, weights = moments[0,~mask,i])
 
-        if full == True:
-            xi_est_std[i] = np.average((temp-xi_est[i])**2,
-                                weights = moments[0,~mask,i])
+        xi_est_std[i] = np.average((temp-xi_est[i])**2,
+                            weights = moments[0,~mask,i])
+
+    if verbose == True:
+        print(r'ξ = {:f}'.format(xi_est[i]) + r' ± {:f}'.format(xi_est_std[i]))
 
     if full == True:
         return xi_est, xi_est_std
@@ -59,7 +60,7 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
 
 
 def jump_rate(moments: np.ndarray, xi_est: np.array, tol: float=1e-10,
-        full: bool=False) -> np.ndarray:
+        full: bool=False, verbose: bool=True) -> np.ndarray:
     """
     Retrieves the jump rate lamb (λ) via
 
@@ -90,10 +91,10 @@ def jump_rate(moments: np.ndarray, xi_est: np.array, tol: float=1e-10,
     # is xi_est is not iterable, turn it into a 1-entry array
     xi_est = np.array([xi_est])
 
+    # pre-allocate variable
     lamb_est = np.zeros(moments.shape[2])
+    lamb_est_std = np.zeros(moments.shape[2])
 
-    if full == True:
-        lamb_est_std = np.zeros(moments.shape[2])
 
     for i in range(moments.shape[2]):
         mask = moments[0,:,i] < tol
@@ -102,9 +103,11 @@ def jump_rate(moments: np.ndarray, xi_est: np.array, tol: float=1e-10,
 
         lamb_est[i] = np.average(temp, weights = moments[0,~mask,i])
 
-        if full == True:
-            lamb_est_std[i] = np.average((temp-lamb_est[i])**2,
-                                weights=moments[0,~mask,i])
+        lamb_est_std[i] = np.average((temp-lamb_est[i])**2,
+                            weights=moments[0,~mask,i])
+
+    if verbose == True:
+        print(r'λ = {:f}'.format(lamb_est[i]) + r' ± {:f}'.format(lamb_est_std[i]))
 
     if full == True:
         return lamb_est, lamb_est_std
