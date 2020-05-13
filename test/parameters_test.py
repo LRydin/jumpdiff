@@ -21,11 +21,11 @@ def test_parameters():
         # and simply call the integration function
         X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
-        edges, moments = moments(timeseries = X)
+        edges, m = moments(timeseries = X)
 
-        xi_est = jump_amplitude(moments = moments)
+        xi_est = jump_amplitude(moments = m)
 
-        lamb_est = jump_rate(moments = moments, xi_est = xi)
+        lamb_est = jump_rate(moments = m, xi_est = xi)
 
         if not isinstance(lamb_est, np.ndarray):
             raise Exception('Results is not an array')
