@@ -65,7 +65,7 @@ def jdprocess(time: float, delta_t: float, a: callable, b: callable,
     assert time > 0, "Total integration time must be positive"
     assert delta_t > 0, "Time sampling must be positive"
     if solver == 'Milstein':
-        assert b_prime == None, "Introduce b'(x) to use the Milstein solver"
+        assert b_prime != None, "Introduce b'(x) to use the Milstein solver"
         assert callable(b_prime) == True, "b'(x) must be a function"
 
     assert callable(a) == True, "drift a(x) must be a function"
