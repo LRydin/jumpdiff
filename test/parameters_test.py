@@ -1,4 +1,4 @@
-, full = fullimport numpy as np
+import numpy as np
 from JumpDiff import jdprocess, jump_amplitude, jump_rate, moments
 
 def test_parameters():
@@ -33,8 +33,7 @@ def test_parameters():
 
             if full == True:
                 xi_est, xi_est_std = jump_amplitude(moments = m, full = full)
-                lamb_est, lamb_est_std = jump_rate(moments = m, xi_est = xi,
-                        full = full)
+                lamb_est, lamb_est_std = jump_rate(moments = m, xi_est = xi, full = full)
 
                 assert isinstance(lamb_est, np.ndarray)
                 assert isinstance(xi_est, np.ndarray)
