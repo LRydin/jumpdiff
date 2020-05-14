@@ -106,11 +106,7 @@ _kernels = {epanechnikov, gaussian, uniform, triagular, quartic}
 
 
 def silvermans_rule(timeseries: np.ndarray) -> float:
-    n, dims = timeseries.shape
-    sigma = np.std(timeseries, axis=0)
-    sigma = sigma.max()
+    n = timeseries.size
+    sigma = np.std(timeseries, axis=0).max()
 
-    return sigma * (4.0 / (3 * n)) ** (1 / 5)
-
-#TODO do we need dims in the kernel functions? Can't se just read that off the
-#     the x (ndarray)?
+    return  ( (4.0 * sigma**5) / (3 * n)) ** (1 / 5)
