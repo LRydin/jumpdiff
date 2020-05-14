@@ -48,7 +48,7 @@ lamb = 1.75
 X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 ```
 
-This will generate a jump diffusion process `X` of length `int(500/0.001)` with the given parameters
+This will generate a jump diffusion process `X` of length `int(10000/0.001)` with the given parameters
 
 <img src="/Others/X_trajectory.png" title="A jump-difussion process" height="200"/>
 
@@ -80,6 +80,7 @@ And the second moment (i.e., the second Kramers─Moyal coefficient) is a mixtur
 
 <img src="/Others/2_moment.png" title="The 2nd Kramers─Moyal coefficient" height="200"/>
 
+You have this stored in `moments[2,...]`.
 
 ### Retrieving the jump-related terms
 Naturally one of the most pertinent questions when addressing jump-diffusion processes is the possibility of recovering these same parameters from data. For the given jump-diffusion process we can use the `jump_amplitude` and `jump_rate` functions to non-parametrically estimate the jump amplitude <img src="/Others/xi.png" title="jump amplitude term" height="18"/> and jump rate <img src="/Others/lambda.png" title="jump rate term" height="18"/> terms.
