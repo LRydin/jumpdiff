@@ -59,7 +59,7 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
         return xi_est
 
 
-def jump_rate(moments: np.ndarray, xi_est: np.array, tol: float=1e-10,
+def jump_rate(moments: np.ndarray, xi_est: np.ndarray=None, tol: float=1e-10,
         full: bool=False, verbose: bool=True) -> np.ndarray:
     """
     Retrieves the jump rate lamb (λ) via
@@ -75,6 +75,11 @@ def jump_rate(moments: np.ndarray, xi_est: np.array, tol: float=1e-10,
     moments: np.ndarray
         moments extracted with the function 'moments'. Needs moments of order 6.
 
+    xi_est: np.ndarray
+        If the amplitude of the jumps are known, they can be added manually,
+        else by default it will first retrieve the jump amplitude and then
+        calculates the jump rate.
+
     tol: float
         Toleration for the division of the moments.
 
@@ -88,13 +93,17 @@ def jump_rate(moments: np.ndarray, xi_est: np.array, tol: float=1e-10,
         Estimator on the jump rate lamb (λ)
     """
 
-    # is xi_est is not iterable, turn it into a 1-entry array
-    xi_est = np.array([xi_est])
-
     # pre-allocate variable
     lamb_est = np.zeros(moments.shape[2])
     lamb_est_std = np.zeros(moments.shape[2])
 
+    # requires knowing the jump amplitude of the process
+    if xi_est == None:
+        xi_est = jump_amplitude(moments = moments, tol = tol,
+                full = False, verbose = False)
+    else:
+        # is xi_est is not iterable, turn it into a 1-entry array
+        xi_est = np.array([xi_est])
 
     for i in range(moments.shape[2]):
         mask = moments[0,:,i] < tol
