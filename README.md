@@ -15,7 +15,7 @@ One for of these processes which is mathematically traceable is given by the [St
 
 <img src="/Others/SDE_1.png" title="A jump diffusion process" height="25"/>
 
-which has 4 main elements: a drift term <img src="/Others/a_xt.png" title="drift term" height="18"/>, a diffusion term <img src="/Others/b_xt.png" title="diffusion term" height="18"/>, and jump amplitude term <img src="/Others/xi.png" title="jump amplitude term" height="18"/>, which is given by a Gaussian distribution, and finally a jump rate <img src="/Others/lambda.png" title="jump rate term" height="18"/>.
+which has 4 main elements: a drift term <img src="/Others/a_xt.png" title="drift term" height="18"/>, a diffusion term <img src="/Others/b_xt.png" title="diffusion term" height="18"/>, and jump amplitude term <img src="/Others/xi.png" title="jump amplitude term" height="18"/>, which is given by a Gaussian distribution, and finally a jump rate <img src="/Others/lambda.png" title="jump rate term" height="14"/>.
 You can find a good review on this topic in Ref. 2.
 
 ## Integrating a jump-diffusion process
@@ -29,10 +29,10 @@ Let us thus define a jump-diffusion process and use `jdprocess` to integrate it.
 
 ```python
 # integration time and time sampling
-t_final = 15000
-delta_t = 0.01
+t_final = 10000
+delta_t = 0.001
 
-# let us define a drift function
+# A drift function
 def a(x):
     return -0.5*x
 
@@ -41,8 +41,8 @@ def b(x):
     return 0.75
 
 # Now define a jump amplitude and rate
-xi = 1.5
-lamb = 1.25
+xi = 2.5
+lamb = 1.75
 
 # and simply call the integration function
 X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
@@ -50,7 +50,7 @@ X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
 This will generate a jump diffusion process `X` of length `int(500/0.001)` with the given parameters
 
-<img src="/Others/X_trajectory.png" title="A jump-difussion process" height="300"/>
+<img src="/Others/X_trajectory.png" title="A jump-difussion process" height="200"/>
 
 ## Using `JumpDiff` to retrieve the parameters
 ### Moments and Kramers─Moyal coefficients
@@ -72,9 +72,14 @@ import matplotlib.plotly as plt
 # we want the first power, so we need 'moments[1,...]'
 plt.plot(edges, moments[1,...])
 ```
-The first moment here (i.e., the first Kramers─Moyal coefficient) is given solely by the drift term that we have selected `-2*x`
+The first moment here (i.e., the first Kramers─Moyal coefficient) is given solely by the drift term that we have selected `-0.5*x`
 
-<img src="/Others/1_moment.png" title="A jump-difussion process" height="300"/>
+<img src="/Others/1_moment.png" title="The 1st Kramers─Moyal coefficient" height="200"/>
+
+And the second moment (i.e., the second Kramers─Moyal coefficient) is a mixture of both the contributions of the diffusive term <img src="/Others/b_xt.png" title="diffusion term" height="18"/> and the jump terms <img src="/Others/xi.png" title="jump amplitude term" height="18"/> and <img src="/Others/lambda.png" title="jump rate term" height="14"/>.
+
+<img src="/Others/2_moment.png" title="The 2nd Kramers─Moyal coefficient" height="200"/>
+
 
 ### Retrieving the jump-related terms
 Naturally one of the most pertinent questions when addressing jump-diffusion processes is the possibility of recovering these same parameters from data. For the given jump-diffusion process we can use the `jump_amplitude` and `jump_rate` functions to non-parametrically estimate the jump amplitude <img src="/Others/xi.png" title="jump amplitude term" height="18"/> and jump rate <img src="/Others/lambda.png" title="jump rate term" height="18"/> terms.
@@ -88,7 +93,7 @@ xi_est = jd.jump_amplitude(moments = moments)
 # and now estimated the jump rate
 lamb_est = jd.jump_rate(moments = moments, xi_est = xi_est)
 ```
-which resulted in our case in `xi_est = 2.57` and `lamb_est = 1.22 * delta_t` (don't forget to divide `lamb_est` by delta_t)!
+which resulted in our case in `(xi_est) ξ = 2.43 ± 0.17` and `(lamb_est) λ = 1.744 * delta_t` (don't forget to divide `lamb_est` by delta_t)!
 
 ### Other functions and options
 Include in this package is also the Milstein scheme, particularly important when the diffusion term has some spacial `x` dependence. `moments` can actually calculate the conditional moments for different lags, using the parameter `lag`.
@@ -102,6 +107,7 @@ We abide to a [Conduct of Fairness](contributions.md).
 
 # Changelog
 - *Planned next version* - could one generalise the second-order corrections to higher order?
+- Version 0.4 - Designing a set of self-consistency checks, the documentation, examples, and a trial code.
 - Version 0.3 - Designing a straightforward procedure to retrieve the jump amplitude and jump rate functions, alongside with a easy `sympy` displaying the correction.
 - Version 0.2 - Introducing the second-order corrections to the moments
 - Version 0.1 - Design an implementation of the `moments` functions, generalising `kramersmoyal` `km`.
@@ -126,7 +132,7 @@ Helmholtz Association Initiative _Energy System 2050 - A Contribution of the Res
 ##### Extended Literature
 You can find further reading on SDE, non-parametric estimatons, and the general principles of the Fokker–Planck equation, Kramers–Moyal expansion, and related topics in the classic (physics) books
 
-- Risken, H.  *The Fokker–Planck equation.* Springer, Berlin, Heidelberg (1989).
+- Risken, H. *The Fokker–Planck equation.* Springer, Berlin, Heidelberg (1989).
 - Gardiner, C.W. *Handbook of Stochastic Methods.* Springer, Berlin (1985).
 
 And an extensive review on the subject [here](http://sharif.edu/~rahimitabar/pdfs/80.pdf)

@@ -7,7 +7,7 @@ import JumpDiff as jd
 # %% Let's first integrate a jump-diffusion process
 # Define:
 # integration time and time sampling
-t_final = 15000
+t_final = 10000
 delta_t = 0.001
 
 # A drift function
@@ -20,7 +20,7 @@ def b(x):
 
 # Now define a jump amplitude and rate
 xi = 2.5
-lamb = 1.25
+lamb = 1.75
 
 # and let jdprocess integrate the stochastic path
 X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
@@ -33,8 +33,9 @@ ax.plot(np.linspace(0,t_final,int(t_final/delta_t)), X, color = 'black')
 ax.set_xlabel('t', fontsize=16)
 ax.set_ylabel('x', fontsize=16)
 
+
 # %% To retrieve the moments, use:
-edges, moments = jd.moments(timeseries = X, bw=0.6, correction = True)
+edges, moments = jd.moments(timeseries = X, bw = 0.35)
 # and don't forget that the Kramers─Moyal coefficient need `moments/delta_t`
 
 
@@ -55,7 +56,7 @@ fig, ax = plt.subplots(1,1,figsize=(6,3))
 
 ax.plot(edges, moments[2,...]/delta_t, color = 'black', label = '2nd Kramers─Moyal coefficient')
 ax.plot(edges, (b(0)**2 + xi*lamb)*np.ones_like(edges), '--', color = 'black', label = 'Theoretical curve $b^2+λξ$')
-ax.set_xlim([-5,5]); ax.set_ylim([0,6])
+ax.set_xlim([-5,5]); ax.set_ylim([3,8])
 
 ax.set_xlabel('x', fontsize=16)
 ax.set_ylabel('$D_2$(x)', fontsize=16)
