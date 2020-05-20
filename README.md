@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/LRydin/JumpDiff.svg?branch=master)](https://travis-ci.org/LRydin/JumpDiff) [![codecov](https://codecov.io/gh/LRydin/JumpDiff/branch/master/graph/badge.svg)](https://codecov.io/gh/LRydin/JumpDiff)
+[![Build Status](https://travis-ci.org/LRydin/JumpDiff.svg?branch=master)](https://travis-ci.org/LRydin/JumpDiff) [![codecov](https://codecov.io/gh/LRydin/JumpDiff/branch/master/graph/badge.svg)](https://codecov.io/gh/LRydin/JumpDiff)[![Documentation Status](https://readthedocs.org/projects/jumpdiff/badge/?version=latest)](https://jumpdiff.readthedocs.io/en/latest/?badge=latest)
 
 # JumpDiff
 `JumpDiff` is a `python` library with non-parametric Nadaraya─Watson estimators to extract the parameters of jump-diffusion processes.
@@ -20,6 +20,8 @@ Then on your favourite editor just use
 ## Dependencies
 The library parameter estimation depends on `numpy` and `scipy` solely. The mathematical formulae depend on `scypy`. It stems from [`kramersmoyal`](https://github.com/LRydin/KramersMoyal) project, but functions independently from it<sup>3</sup>.
 
+## Documentation
+You can find the documentation [here](https://jumpdiff.readthedocs.io/).
 
 # Jump-diffusion processes
 ## The theory
