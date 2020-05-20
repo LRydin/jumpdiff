@@ -2,7 +2,7 @@
 
 # JumpDiff
 `JumpDiff` is a `python` library with non-parametric Nadaraya─Watson estimators to extract the parameters of jump-diffusion processes.
-With `JumpDiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseris
+With `JumpDiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseries.
 
 ## Dependencies
 The library parameter estimation depends on `numpy` and `scipy` solely. The mathematical formulae depend on `scypy`. It stems from [`kramersmoyal`](https://github.com/LRydin/KramersMoyal) project, but functions independently from it<sup>3</sup>.
@@ -48,7 +48,7 @@ lamb = 1.75
 X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 ```
 
-This will generate a jump diffusion process `X` of length `int(10000/0.001)` with the given parameters
+This will generate a jump diffusion process `X` of length `int(10000/0.001)` with the given parameters.
 
 <img src="/Others/X_trajectory.png" title="A jump-difussion process" height="200"/>
 
@@ -92,14 +92,14 @@ After having the `moments` in hand, all we need is
 xi_est = jd.jump_amplitude(moments = moments)
 
 # and now estimated the jump rate
-lamb_est = jd.jump_rate(moments = moments, xi_est = xi_est)
+lamb_est = jd.jump_rate(moments = moments)
 ```
-which resulted in our case in `(xi_est) ξ = 2.43 ± 0.17` and `(lamb_est) λ = 1.744 * delta_t` (don't forget to divide `lamb_est` by delta_t)!
+which resulted in our case in `(xi_est) ξ = 2.43 ± 0.17` and `(lamb_est) λ = 1.744 * delta_t` (don't forget to divide `lamb_est` by `delta_t`)!
 
 ### Other functions and options
-Include in this package is also the Milstein scheme, particularly important when the diffusion term has some spacial `x` dependence. `moments` can actually calculate the conditional moments for different lags, using the parameter `lag`.
+Include in this package is also the [Milstein scheme](https://en.wikipedia.org/wiki/Milstein_method) of integration, particularly important when the diffusion term has some spacial `x` dependence. `moments` can actually calculate the conditional moments for different lags, using the parameter `lag`.
 
-In `formulae` the set of formulas needed to calculate the second order corrections are given (in sympy).
+In `formulae` the set of formulas needed to calculate the second order corrections are given (in `sympy`).
 
 # Contributions
 We welcome reviews and ideas from everyone. If you want to share your ideas, upgrades, doubts, or simply report a bug, open an [issue](https://github.com/LRydin/JumpDiff/issues) here on GitHub, or contact us directly.
@@ -126,9 +126,9 @@ Helmholtz Association Initiative _Energy System 2050 - A Contribution of the Res
 
 <sup>1</sup> Tabar, M. R. R. *Analysis and Data-Based Reconstruction of Complex Nonlinear Dynamical Systems.* Springer, International Publishing (2019), Chapter [*Stochastic Processes with Jumps and Non-vanishing Higher-Order Kramers–Moyal Coefficients*](https://doi.org/10.1007/978-3-030-18472-8_11).
 
-<sup>2</sup> Friedrich, R., Peinke, J., Sahimi, M., Tabar, M. R. R. *Approaching complexity by stochastic methods: From biological systems to turbulence,* [Phys. Rep. 506, 87–162 (2011)](https://doi.org/10.1016/j.physrep.2011.05.003).
+<sup>2</sup> Friedrich, R., Peinke, J., Sahimi, M., Tabar, M. R. R. *Approaching complexity by stochastic methods: From biological systems to turbulence,* [Physics Reports 506, 87–162 (2011)](https://doi.org/10.1016/j.physrep.2011.05.003).
 
-<sup>3</sup> Rydin Gorjão, L., Meirinhos, F. *kramersmoyal: Kramers–Moyal coefficients for stochastic processes.* [Journal of Open Source Software , **4**(44) (2019)](https://doi.org/10.21105/joss.01693).
+<sup>3</sup> Rydin Gorjão, L., Meirinhos, F. *kramersmoyal: Kramers–Moyal coefficients for stochastic processes.* [Journal of Open Source Software, **4**(44) (2019)](https://doi.org/10.21105/joss.01693).
 
 ##### Extended Literature
 You can find further reading on SDE, non-parametric estimatons, and the general principles of the Fokker–Planck equation, Kramers–Moyal expansion, and related topics in the classic (physics) books
