@@ -8,15 +8,20 @@ import numpy as np
 def jdprocess(time: float, delta_t: float, a: callable, b: callable,
         xi: float, lamb: float, init: float=None, solver: str='Euler',
         b_prime: callable=None) -> np.ndarray:
-    """
+    r"""
     Integrates a jump-diffusion process with drift a(x), diffusion b(x), jump
-    amplitude xi (ξ), and jump rate lamb (λ).
+    amplitude xi (:math:`\xi`), and jump rate lamb (:math:`\lambda`).
 
-        dXₜ = a(x)dt + b(x)dW(t) + ξdJ(t), with J Poisson with jump rate λ.
+    .. math::
+
+       \mathrm{d} X(t) = a(x,t)\;\mathrm{d} t + b(x,t)\;\mathrm{d} W(t)
+       + \xi\;\mathrm{d} J(t),
+
+    with :math:`J` Poisson with jump rate :math:`\lambda`.
 
     This integrator has both an Euler─Mayurama and a Milstein method of
     integration. For Milstein one has to introduce the derivative of the
-    diffusion term 'b', denoted 'b_prime'.
+    diffusion term ``b``, denoted ``b_prime``.
 
     Parameters
     ----------
@@ -27,38 +32,38 @@ def jdprocess(time: float, delta_t: float, a: callable, b: callable,
         Time sampling, the smaller the better.
 
     a: callable
-        The drift function. Can be a function of a lambda. For an
-        Ornstein─Uhlenbeck process with drift '-2x', a takes the form
-            a =  lambda x: -2x
+        The drift function. Can be a function of a ``lambda``. For an
+        Ornstein─Uhlenbeck process with drift ``-2x``, a takes the form
+            ``a =  lambda x: -2x``.
 
     b: callable
-        The diffusion function. Can be a function of a lambda. For an
-        Ornstein─Uhlenbeck process with diffusion 1, a takes the form
-            b =  lambda x: 1
+        The diffusion function. Can be a function of a ``lambda``. For an
+        Ornstein─Uhlenbeck process with diffusion ``1``, a takes the form
+            ``b =  lambda x: 1``.
 
     xi: float > 0
         Variance of the jump amplitude, which will be turned into a normal
-        distribution like N(0,√xi)
+        distribution like :math:`\mathcal{N}`\ ``(0,√xi)``.
 
     lamb: float > 0
         Jump rate of the Poissonian jumps. This is implemented as the numpy
-        function 'np.random.poisson(lam = lamb * delta_t)'
+        function ``np.random.poisson(lam = lamb * delta_t)``.
 
-    init: float
-        Initial conditions. If None given, generates a random value from a
-        normal distribution ~ N(0,√delta_t)
+    init: float (defaul ``None``)
+        Initial conditions. If ``None`` given, generates a random value from a
+        normal distribution ~ :math:`\mathcal{N}`\ ``(0,√delta_t)``.
 
-    solver: 'Euler' or 'Milstein'
-        The regular Euler─Maruyama solver (None) is the default, with an order
-        of '√delta_t'. To employ a state-dependent diffusion, i.e., b(x) as a
-        function of x, the Milstein scheme has an order of 'delta_t'. You must
+    solver: 'Euler' or 'Milstein' (defaul 'Euler')
+        The regular Euler─Maruyama solver 'Euler' is the default, with an order
+        of ``√delta_t``. To employ a state-dependent diffusion, i.e., b(x) as a
+        function of x, the Milstein scheme has an order of ``delta_t``. You must
         introduce as well the derivative of b(x), i.e., b'(x), as the argument
-        'b_prime'.
+        ``b_prime``.
 
     Returns
     -------
     X: np.array
-        Timeseries of size int(time/delta_t).
+        Timeseries of size ``int(time/delta_t)``
     """
 
     # assert and conditions

@@ -6,32 +6,42 @@ import numpy as np
 
 def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
         full: bool=False, verbose: bool=True) -> np.ndarray:
-    """
-    Retrieves the jump amplitude xi (ξ) via
+    r"""
+    Retrieves the jump amplitude xi (:math:`\xi`) via
 
-                        M₆(x)
-          σ²[ξ](x) =  ─────────
-                       5 M₄(x)
+    .. math::
 
-    Take notice that the different normalisation of the 'moments' leads to a
+        \lambda(x,t)  &= \frac{M_4(x,t)}{3\sigma_{\xi}^4}.
+
+    Take notice that the different normalisation of the ``moments`` leads to a
     different results.
 
     Parameters
     ----------
     moments: np.ndarray
-        moments extracted with the function 'moments'. Needs moments of order 6.
+        Moments extracted with the function ``moments``. Needs moments up to
+        order ``6``.
 
-    tol: float
+    tol: float (defaul ``1e-10``)
         Toleration for the division of the moments.
 
-    full: bool
-        If 'True' returns also the (biased) weighed standard deviation of the
+    full: bool (defaul ``False``)
+        If ``True`` returns also the (biased) weighed standard deviation of the
         averaging process.
+
+    verbose: bool (defaul ``True``)
+        Prints the result.
 
     Returns
     -------
     xi_est: np.ndarray
-        Estimator of the jump amplitude xi (ξ).
+        Estimator of the jump amplitude xi (:math:`\xi`).
+
+    References
+    ----------
+    K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar 'Characterizing abrupt
+    transitions in stochastic dynamics'. New Journal of Physics, 20(11):113043,
+    2018, doi: 10.1088/1367-2630/aaf0d7.
     """
 
     # pre-allocate variable
@@ -61,36 +71,41 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
 
 def jump_rate(moments: np.ndarray, xi_est: np.ndarray=None, tol: float=1e-10,
         full: bool=False, verbose: bool=True) -> np.ndarray:
-    """
-    Retrieves the jump rate lamb (λ) via
+    r"""
+    Retrieves the jump rate lamb (:math:`\lambda`) via
 
-                      M₄(x)
-          λ(x) =  ────────────
-                   3 σ²[ξ](x)
+    .. math::
 
-    which requires σ²[ξ](x), i.e., find 'jump_amplitude()' before.
+        \sigma_{\xi}^2  &= \frac{M_6(x,t)}{5M_4(x,t)}.
+
+    Take notice that the different normalisation of the ``moments`` leads to a
+    different results.
 
     Parameters
     ----------
     moments: np.ndarray
         moments extracted with the function 'moments'. Needs moments of order 6.
 
-    xi_est: np.ndarray
-        If the amplitude of the jumps are known, they can be added manually,
-        else by default it will first retrieve the jump amplitude and then
-        calculates the jump rate.
-
-    tol: float
+    tol: float (defaul ``1e-10``)
         Toleration for the division of the moments.
 
-    full: bool
-        If 'True' returns also the (biased) weighed standard deviation of the
+    full: bool (defaul ``False``)
+        If ``True`` returns also the (biased) weighed standard deviation of the
         averaging process.
+
+    verbose: bool (defaul ``True``)
+        Prints the result.
 
     Returns
     -------
-    lamb_est: float
-        Estimator on the jump rate lamb (λ)
+    xi_est: np.ndarray
+        Estimator on the jump rate lamb (:math:`\lambda`)
+
+    References
+    ----------
+    K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar 'Characterizing abrupt
+    transitions in stochastic dynamics'. New Journal of Physics, 20(11):113043,
+    2018, doi: 10.1088/1367-2630/aaf0d7.
     """
 
     # pre-allocate variable

@@ -3,7 +3,26 @@
 from sympy import bell, symbols, factorial, simplify
 
 def M_formula(power, tau = True):
+    r"""
+    Generate the formula for the conditional moments with second-order
+    corrections based on the relation with the ordinary Bell polynomials
 
+    .. math::
+
+        M_n(x^{\prime},\tau) \sim  (n!)\tau D_n(x^{\prime}) + \frac{(n!)\tau^2}{2}
+        \sum_{m=1}^{n-1}   D_m(x^{\prime})  D_{n-m}(x^{\prime})
+
+
+    Parameters
+    ----------
+    power: int
+        Desired order of the formula.
+
+    Returns
+    -------
+    term: sympy.symbols
+        Expression up to given ``power``.
+    """
     init_sym = symbols('D:'+str(int(power+1)))[1:]
     sym = ()
     for i in range(1,power + 1):
@@ -20,6 +39,27 @@ def M_formula(power, tau = True):
     return term
 
 def F_formula(power):
+    r"""
+    Generate the formula for the conditional moments with second-order
+    corrections based on the relation with the ordinary Bell polynomials
+
+    .. math::
+
+        D_n(x) &=  \frac{1}{\tau (n!)} \bigg[ \hat{B}_{n,1}
+        \left(M_1(x,\tau),M_2(x,\tau),\ldots,M_{n}(x,\tau)\right) \\
+        &\qquad  \left.-\frac{\tau}{2} \hat{B}_{n,2}
+        \left(M_1(x,\tau),M_2(x,\tau),\ldots,M_{n-1}(x,\tau)\right)\right].
+
+    Parameters
+    ----------
+    power: int
+        Desired order of the formula.
+
+    Returns
+    -------
+    term: sympy.symbols
+        Expression up to given ``power``.
+    """
 
     init_sym = symbols('D:'+str(int(power+1)))[1:]
     sym = ()

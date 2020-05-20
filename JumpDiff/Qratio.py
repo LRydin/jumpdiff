@@ -6,18 +6,16 @@ from .moments import moments
 
 def Qratio(lag: np.ndarray, timeseries: np.ndarray, loc: int=None,
         correction: bool=True) -> np.ndarray:
-    """
+    r"""
     Qratio method to distinguish pure diffusion from jump-diffusion timeseries,
     Given by the relation of the 4th and 6th Kramers─Moyal coefficient with
     increasing lag
 
-                      D₆(x,τ)
-          Q(x,τ) =  ─────────── ,
-                     5 D₄(x,τ)
+    .. math::
 
-    introduced by K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar in
-    'Characterizing abrupt transitions in stochastic dynamics'. New Journal of
-    Physics, 20(11):113043, 2018, doi: 10.1088/1367-2630/aaf0d7.
+        Q(x,\tau) = \frac{D_6(x,\tau)}{5 D_4(x,\tau)} = \left\{\begin{array}{ll}
+            b(x)^2 \tau, & \text{diffusive}  \\ \sigma_\xi^2(x), & \text{jumpy}
+        \end{array}\right.
 
     Parameters
     ----------
@@ -26,16 +24,15 @@ def Qratio(lag: np.ndarray, timeseries: np.ndarray, loc: int=None,
         different lags.
 
     timeseries: np.ndarray
-        A 1-dimensional timeseries (N, 1). The timeseries of length N.
+        A 1-dimensional timeseries.
 
-    loc: float
-        Use a particular point in space to calculate the ratio. If none given,
-        the maximum of the probability density function is taken.
+    loc: float (defaul ``None``)
+        Use a particular point in space to calculate the ratio. If ``None``
+        given, the maximum of the probability density function is taken.
 
-    corrections: bool
+    corrections: bool (defaul ``True``)
         Implements the second-order corrections of the Kramers─Moyal conditional
-        moments directly. Default 'False', since the Q-ratio is only proven at
-        first-order.
+        moments directly.
 
     Returns
     -------
@@ -44,6 +41,12 @@ def Qratio(lag: np.ndarray, timeseries: np.ndarray, loc: int=None,
 
     ratio: np.ndarray of len(lag)
         Ratio of the sixth-order over forth-order Kramers–Moyal coefficient.
+
+    References
+    ----------
+    K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar 'Characterizing abrupt
+    transitions in stochastic dynamics'. New Journal of Physics, 20(11):113043,
+    2018, doi: 10.1088/1367-2630/aaf0d7.
     """
 
     # Force lag to be ints, ensure lag > order + 1, and removes duplicates

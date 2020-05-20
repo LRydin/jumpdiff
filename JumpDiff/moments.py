@@ -14,11 +14,11 @@ from scipy.special import factorial
 from .binning import histogramdd
 from .kernels import silvermans_rule, epanechnikov, _kernels
 
-def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
-        lag: list=[1], correction: bool=True, norm: bool=False,
-        kernel: callable=None, bw: float=None, tol: float=1e-10,
-        conv_method: str='auto'):
-    """
+def moments(timeseries: np.ndarray, bw: float=None, bins: np.ndarray=None,
+        power: int=6, lag: list=[1], correction: bool=True, norm: bool=False,
+        kernel: callable=None, tol: float=1e-10,
+        conv_method: str='auto') -> np.ndarray:
+    r"""
     Estimates the moments of the Kramers─Moyal expansion from a timeseries using
     a Nadaraya─Watson kernel estimator method. These later can be turned into
     the drift and diffusion coefficients after normalisation.
@@ -26,30 +26,30 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
     Parameters
     ----------
     timeseries: np.ndarray
-        A 1-dimensional timeseries of length N.
+        A 1-dimensional timeseries.
 
-    bins: np.ndarray
-        The number of bins for each dimension, defaults to 'np.array([5000])'.
+    bins: np.ndarray (defaul ``None``)
+        The number of bins for each dimension, defaults to ``np.array([5000])``.
         This is the underlying space for the Kramers─Moyal conditional moments.
 
-    power: int
+    power: int (defaul ``6``)
         Upper limit of the the Kramers─Moyal conditional moments to calculate.
         It will generate all Kramers─Moyal conditional moments up to power.
 
-    lag: list
+    lag: list (defaul ``1``)
         Calculates the Kramers─Moyal conditional moments at each indicated lag,
-        i. e., for timeseries[::lag[]]. Defaults to '1', the shortest timestep
-        in the data.
+        i.e., for ``timeseries[::lag[]]``. Defaults to ``1``, the shortest
+        timestep in the data.
 
-    corrections: bool
+    corrections: bool (defaul ``True``)
         Implements the second-order corrections of the Kramers─Moyal conditional
         moments directly
 
-    norm: bool
-        Sets the normalisation. 'False' returns the Kramers─Moyal conditional
-        moments, and 'True' returns the Kramers─Moyal coefficients.
+    norm: bool (defaul ``False``)
+        Sets the normalisation. ``False`` returns the Kramers─Moyal conditional
+        moments, and ``True`` returns the Kramers─Moyal coefficients.
 
-    kernel: callable
+    kernel: callable (defaul ``None``)
         Kernel used to convolute with the Kramers─Moyal conditional moments. To
         select example an Epanechnikov kernel use
             kernel = kernels.epanechnikov
@@ -57,10 +57,10 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
 
     bw: float
         Desired bandwidth of the kernel. A value of 1 occupies the full space of
-        the bin space. Recommended are values 0.005 < bw < 0.4.
+        the bin space. Recommended are values ``0.005 < bw < 0.4``.
 
     tol: float
-        Round to zero absolute values smaller than `tol`, after convolutions.
+        Round to zero absolute values smaller than ``tol``, after convolutions.
 
     conv_method: str
         A string indicating which method to use to calculate the convolution.
@@ -74,9 +74,11 @@ def moments(timeseries: np.ndarray, bins: np.ndarray=None, power: int=6,
     moments: np.ndarray
         The calculated moments from the Kramers─Moyal expansion of the
         timeseries at each lag. To extract the selected orders of the moments,
-        use moments[i,:,j], with i the order according to powers, j the lag (if
-        any given)
+        use ``moments[i,:,j]``, with ``i`` the order according to powers, ``j``
+        the lag (if any given).
+
     """
+
     timeseries = np.asarray_chkfinite(timeseries, dtype=float)
     if len(timeseries.shape) == 1:
         timeseries = timeseries.reshape(-1, 1)
@@ -191,24 +193,30 @@ def _moments(timeseries: np.ndarray, bins: np.ndarray, powers: np.ndarray,
 
     return edge_, moments
 
-def corrections(m, power, norm: bool=False):
-    """
+def corrections(m, power):
+    r"""
     The moments function will by default apply the corrections. You can turn
-    the corrections off in that fuction by setting 'corrections = False'.
+    the corrections off in that fuction by setting ``corrections = False``.
 
     Second-order corrections of the Kramers─Moyal coefficients (conditional
     moments), given by
 
-        F₁ =       M₁
-        F₂ =   1/2(M₂ - M₁²)
-        F₃ =   1/6(M₃ - 3M₁M₂ + 3M₁³)
-        F₄ =  1/24(M₄ - 4M₁M₃ + 18M₁²M₂ - 3M₂² - 15M₁⁴)
-        F₅ = 1/120(M₅ - 5M₁M₄ + 30M₁²M₃ - 150M₁³M₂ + 45M₁M₂² - 10M₂M₃ + 105M₁⁵)
-        F₆ = 1/720(M₆ - 6M₁M₅ + 45M₁²M₄ - 300M₁³M₃ + 1575M₁⁴M₂ - 675M₁²M₂²
-                    + 180M₁M₂M₃ + 45M₂³ - 15M₂M₄ - 10M₃² - 945M₁⁶)
+    .. math::
+
+        F_1 &= M_1,\\
+        F_2 &= \frac{1}{2}\!  \left(M_2-M_1^2\right ), \\
+        F_3 &= \frac{1}{6}\!  \left( M_3-3M_1M_2+3M_1^3 \right ), \\
+        F_4 &= \frac{1}{24}\! \left(M_4-4M_1M_3+18M_1^2M_2-3M_2^2
+            -15M_1^4 \right) , \\
+        F_5 &= \frac{1}{120}\!\left(M_5 -5 M_1 M_4 +30 M_1^2 M_3 -150 M_1^3 M_2
+            +45 M_1 M_2^2-10 M_2 M_3 + 105 M_1^5 \right) \\
+        F_6 &= \frac{1} {720}\! \left (M_6 -6 M_1 M_5 + 45 M_1^2 M_4 -300 M_1^3 M_3
+            +1575 M_1^4 M_2-675 M_1^2 M_2^2 \right. \\
+            & \qquad \left . \ +180 M_1 M_2 M_3+45 M_2^3 -15 M_2 M_4-10 M_3^2
+            - 945 M_1^6\right ) \, ,
 
     with the prefactor the normalisation, i.e., the normalised results are the
-    Kramers─Moyal coefficients. If 'norm' is False, this results in the
+    Kramers─Moyal coefficients. If ``norm`` is False, this results in the
     Kramers─Moyal conditional moments.
 
     Parameters
@@ -216,7 +224,8 @@ def corrections(m, power, norm: bool=False):
     m (moments): np.ndarray
         The calculated conditional moments from the Kramers─Moyal expansion of
         the at each lag. To extract the selected orders of the moments use
-        moments[i,:,j], with i the order according to powers, j the lag.
+        ``moments[i,:,j]``, with ``i`` the order according to powers, ``j`` the
+        lag.
 
     power: int
         Upper limit of the Kramers─Moyal conditional moments to calculate.
@@ -227,8 +236,8 @@ def corrections(m, power, norm: bool=False):
     F: np.ndarray
         The corrections of the calculated Kramers─Moyal conditional moments
         from the Kramers─Moyal expansion of the timeseries at each lag. To
-        extract the selected orders of the moments, use F[i,:,j], with i the
-        order according to powers, j the lag (if any introduced).
+        extract the selected orders of the moments, use ``F[i,:,j]``, with ``i``
+        the order according to powers, ``j`` the lag (if any introduced).
     """
 
     powers = np.linspace(0,power,power+1).astype(int)

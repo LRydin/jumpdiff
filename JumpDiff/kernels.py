@@ -11,11 +11,11 @@ from scipy.stats import norm
 
 def kernel(kernel_func):
     """
-    Transforms a kernel function into a scaled kernel function
-    (for a certain bandwidth `bw`)
+    Transforms a kernel function into a scaled kernel function (for a certain
+    bandwidth ``bw``).
 
     Currently implemented kernels are:
-        Epanechnikov, Gaussian, Uniform, Triangular, Quartic
+        Epanechnikov, Gaussian, Uniform, Triangular, Quartic.
 
     For a good overview of various kernels see
     https://en.wikipedia.org/wiki/Kernel_(statistics)
@@ -36,14 +36,14 @@ def kernel(kernel_func):
 
 def volume_unit_ball(dims: int) -> float:
     """
-    Returns the volume of a unit ball in dimensions dims
+    Returns the volume of a unit ball in dimensions dims.
     """
     return np.pi ** (dims / 2.0) / gamma(dims / 2.0 + 1.0)
 
 @kernel
 def epanechnikov(x: np.ndarray, dims: int) -> np.ndarray:
     """
-    The Epanechnikov kernel in dimensions dims
+    The Epanechnikov kernel in dimensions dims.
     """
     x2 = (x ** 2)
     mask = x2 < 1.0
@@ -55,7 +55,7 @@ def epanechnikov(x: np.ndarray, dims: int) -> np.ndarray:
 @kernel
 def gaussian(x: np.ndarray, dims: int) -> np.ndarray:
     """
-    Gaussian kernel in dimensions dims
+    Gaussian kernel in dimensions dims.
     """
     def gaussian_integral(n):
         if n % 2 == 0:
