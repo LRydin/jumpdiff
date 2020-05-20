@@ -11,7 +11,7 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
 
     .. math::
 
-        \lambda(x,t)  &= \frac{M_4(x,t)}{3\sigma_{\xi}^4}.
+        \lambda(x,t) = \frac{M_4(x,t)}{3\sigma_{\xi}^4}.
 
     Take notice that the different normalisation of the ``moments`` leads to a
     different results.
@@ -76,7 +76,7 @@ def jump_rate(moments: np.ndarray, xi_est: np.ndarray=None, tol: float=1e-10,
 
     .. math::
 
-        \sigma_{\xi}^2  &= \frac{M_6(x,t)}{5M_4(x,t)}.
+        \sigma_{\xi}^2 = \frac{M_6(x,t)}{5M_4(x,t)}.
 
     Take notice that the different normalisation of the ``moments`` leads to a
     different results.

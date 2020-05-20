@@ -10,7 +10,7 @@ from scipy.special import gamma, factorial2
 from scipy.stats import norm
 
 def kernel(kernel_func):
-    """
+    r"""
     Transforms a kernel function into a scaled kernel function (for a certain
     bandwidth ``bw``).
 
