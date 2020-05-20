@@ -4,6 +4,19 @@
 `JumpDiff` is a `python` library with non-parametric Nadaraya─Watson estimators to extract the parameters of jump-diffusion processes.
 With `JumpDiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseries.
 
+## Installation
+To install `JumpDiff`, run
+
+```
+   pip install -i https://test.pypi.org/simple/ JumpDiff
+```
+
+Then on your favourite editor just use
+
+```python
+   import JumpDiff as jd
+```
+
 ## Dependencies
 The library parameter estimation depends on `numpy` and `scipy` solely. The mathematical formulae depend on `scypy`. It stems from [`kramersmoyal`](https://github.com/LRydin/KramersMoyal) project, but functions independently from it<sup>3</sup>.
 
