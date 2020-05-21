@@ -3,12 +3,12 @@ Jump-diffusion processes
 The theory
 ----------
 Jump-diffusion processes\ :sup:`1`, as the name suggest, are a mixed type of stochastic processes with a diffusive and a jump term.
-One for of these processes which is mathematically traceable is given by the `Stochastic Differential Equation <https://en.wikipedia.org/wiki/Stochastic_differential_equation>`_
+One form of these processes which is mathematically traceable is given by the `Stochastic Differential Equation <https://en.wikipedia.org/wiki/Stochastic_differential_equation>`_
 
 .. math::
    \mathrm{d} X(t) = a(x,t)\;\mathrm{d} t + b(x,t)\;\mathrm{d} W(t) + \xi\;\mathrm{d} J(t),
 
-which has four main elements: a drift term :math:`a(x,t)`, a diffusion term :math:`b(x,t)`, linked with a Wiener process :math:`W(t)`, a jump amplitude term :math:`\xi(x,t)`, which is given by a Gaussian distribution :math:`\mathcal{N}(0,\sigma_\xi^2)`, and finally a jump rate :math:`\lambda`, which is the rate of the Poissonian jumps :math:`J(t)`.
+which has four main elements: a drift term :math:`a(x,t)`, a diffusion term :math:`b(x,t)`, linked with a Wiener process :math:`W(t)`, a jump amplitude term :math:`\xi(x,t)`, which is given by a Gaussian distribution :math:`\mathcal{N}(0,\sigma_\xi^2)` coupled with a jump rate :math:`\lambda`, which is the rate of the Poissonian jumps :math:`J(t)`.
 You can find a good review on this topic in Ref. 2.
 
 Integrating a jump-diffusion process
@@ -84,7 +84,7 @@ And the second moment (i.e., the second Kramers---Moyal coefficient) is a mixtur
   :align: center
   :alt: The 2nd Kramers---Moyal coefficient
 
-You have this stored in `moments[2,...]`.
+You have this stored in :code:`moments[2,...]`.
 
 Retrieving the jump-related terms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

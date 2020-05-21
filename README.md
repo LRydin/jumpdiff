@@ -26,7 +26,7 @@ You can find the documentation [here](https://jumpdiff.readthedocs.io/).
 # Jump-diffusion processes
 ## The theory
 Jump-diffusion processes<sup>1</sup>, as the name suggest, are a mixed type of stochastic processes with a diffusive and a jump term.
-One for of these processes which is mathematically traceable is given by the [Stochastic Differential Equation](https://en.wikipedia.org/wiki/Stochastic_differential_equation)
+One form of these processes which is mathematically traceable is given by the [Stochastic Differential Equation](https://en.wikipedia.org/wiki/Stochastic_differential_equation)
 
 <img src="/Others/SDE_1.png" title="A jump diffusion process" height="25"/>
 
