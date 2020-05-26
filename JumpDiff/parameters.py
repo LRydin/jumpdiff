@@ -39,9 +39,13 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
 
     References
     ----------
-    K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar 'Characterizing abrupt
-    transitions in stochastic dynamics'. New Journal of Physics, 20(11):113043,
-    2018, doi: 10.1088/1367-2630/aaf0d7.
+    Anvari, M., Tabar, M. R. R., Peinke, J., Lehnertz, K., 'Disentangling the
+    stochastic behavior of complex time series.' Scientific Reports, 6, 35435,
+    2016. doi: 10.1038/srep35435.
+
+    Lehnertz, K., Zabawa, L., and Tabar, M. R. R., 'Characterizing abrupt
+    transitions in stochastic dynamics.' New Journal of Physics, 20(11):113043,
+    2018. doi: 10.1088/1367-2630/aaf0d7.
     """
 
     # pre-allocate variable
@@ -103,9 +107,13 @@ def jump_rate(moments: np.ndarray, xi_est: np.ndarray=None, tol: float=1e-10,
 
     References
     ----------
-    K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar 'Characterizing abrupt
-    transitions in stochastic dynamics'. New Journal of Physics, 20(11):113043,
-    2018, doi: 10.1088/1367-2630/aaf0d7.
+    Anvari, M., Tabar, M. R. R., Peinke, J., Lehnertz, K., 'Disentangling the
+    stochastic behavior of complex time series.' Scientific Reports, 6, 35435,
+    2016. doi: 10.1038/srep35435.
+
+    Lehnertz, K., Zabawa, L., and Tabar, M. R. R., 'Characterizing abrupt
+    transitions in stochastic dynamics.' New Journal of Physics, 20(11):113043,
+    2018. doi: 10.1088/1367-2630/aaf0d7.
     """
 
     # pre-allocate variable

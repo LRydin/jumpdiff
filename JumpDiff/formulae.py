@@ -1,4 +1,4 @@
-## Delevoped b  Leonardo Rydin Gorjão and  Pedro G. Lind
+## Delevoped by  Leonardo Rydin Gorjão and Pedro G. Lind.
 
 from sympy import bell, symbols, factorial, simplify
 
@@ -9,9 +9,8 @@ def M_formula(power, tau = True):
 
     .. math::
 
-        M_n(x^{\prime},\tau) \sim  (n!)\tau D_n(x^{\prime}) + \frac{(n!)\tau^2}{2}
+        M_n(x^{\prime},\tau) \sim (n!)\tau D_n(x^{\prime}) + \frac{(n!)\tau^2}{2}
         \sum_{m=1}^{n-1}   D_m(x^{\prime})  D_{n-m}(x^{\prime})
-
 
     Parameters
     ----------

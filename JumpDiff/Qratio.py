@@ -1,5 +1,7 @@
-## This is based on Lehnertz 2018, now implemented by Leonardo Rydin Gorjão and
-# Pedro G. Lind for direct application.
+## This is based on  Anvari, M., Tabar, M. R. R., Peinke, J., Lehnertz, K.,
+# 'Disentangling the stochastic behavior of complex time series.' Scientific
+# Reports, 6, 35435, 2016. doi: 10.1038/srep35435, now implemented by Leonardo
+# Rydin Gorjão and Pedro G. Lind for direct application.
 
 import numpy as np
 from .moments import moments
@@ -44,9 +46,13 @@ def Qratio(lag: np.ndarray, timeseries: np.ndarray, loc: int=None,
 
     References
     ----------
-    K. Lehnertz, L. Zabawa, and M. Reza Rahimi Tabar 'Characterizing abrupt
-    transitions in stochastic dynamics'. New Journal of Physics, 20(11):113043,
-    2018, doi: 10.1088/1367-2630/aaf0d7.
+    Anvari, M., Tabar, M. R. R., Peinke, J., Lehnertz, K., 'Disentangling the
+    stochastic behavior of complex time series.' Scientific Reports, 6, 35435,
+    2016. doi: 10.1038/srep35435.
+
+    Lehnertz, K., Zabawa, L., and Tabar, M. R. R., 'Characterizing abrupt
+    transitions in stochastic dynamics.' New Journal of Physics, 20(11):113043,
+    2018. doi: 10.1088/1367-2630/aaf0d7.
     """
 
     # Force lag to be ints, ensure lag > order + 1, and removes duplicates
@@ -55,7 +61,7 @@ def Qratio(lag: np.ndarray, timeseries: np.ndarray, loc: int=None,
 
     # Assert if timeseries is 1 dimensional
     if timeseries.ndim > 1:
-        assert timeseries.shape[1] == 1, "Timeseries needs to be 1 dimensional"
+        assert timeseries.shape[1] == 1, "Timeseries needs to be 1-dimensional"
 
     # Find maximum of distribution
     if loc == None:

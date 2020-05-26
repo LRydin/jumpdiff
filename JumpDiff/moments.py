@@ -16,8 +16,8 @@ from .kernels import silvermans_rule, epanechnikov, _kernels
 
 def moments(timeseries: np.ndarray, bw: float=None, bins: np.ndarray=None,
         power: int=6, lag: list=[1], correction: bool=True, norm: bool=False,
-        kernel: callable=None, tol: float=1e-10,
-        conv_method: str='auto') -> np.ndarray:
+        kernel: callable=None, tol: float=1e-10, conv_method: str='auto',
+        verbose: bool=False) -> np.ndarray:
     r"""
     Estimates the moments of the Kramers─Moyal expansion from a timeseries using
     a Nadaraya─Watson kernel estimator method. These later can be turned into
@@ -28,43 +28,46 @@ def moments(timeseries: np.ndarray, bw: float=None, bins: np.ndarray=None,
     timeseries: np.ndarray
         A 1-dimensional timeseries.
 
-    bins: np.ndarray (defaul ``None``)
+    bw: float
+        Desired bandwidth of the kernel. A value of 1 occupies the full space of
+        the bin space. Recommended are values ``0.005 < bw < 0.4``.
+
+    bins: np.ndarray (default ``None``)
         The number of bins for each dimension, defaults to ``np.array([5000])``.
         This is the underlying space for the Kramers─Moyal conditional moments.
 
-    power: int (defaul ``6``)
+    power: int (default ``6``)
         Upper limit of the the Kramers─Moyal conditional moments to calculate.
         It will generate all Kramers─Moyal conditional moments up to power.
 
-    lag: list (defaul ``1``)
+    lag: list (default ``1``)
         Calculates the Kramers─Moyal conditional moments at each indicated lag,
         i.e., for ``timeseries[::lag[]]``. Defaults to ``1``, the shortest
         timestep in the data.
 
-    corrections: bool (defaul ``True``)
+    corrections: bool (default ``True``)
         Implements the second-order corrections of the Kramers─Moyal conditional
         moments directly
 
-    norm: bool (defaul ``False``)
+    norm: bool (default ``False``)
         Sets the normalisation. ``False`` returns the Kramers─Moyal conditional
         moments, and ``True`` returns the Kramers─Moyal coefficients.
 
-    kernel: callable (defaul ``None``)
+    kernel: callable (default ``None``)
         Kernel used to convolute with the Kramers─Moyal conditional moments. To
         select example an Epanechnikov kernel use
             kernel = kernels.epanechnikov
         If None the Epanechnikov kernel will be used.
 
-    bw: float
-        Desired bandwidth of the kernel. A value of 1 occupies the full space of
-        the bin space. Recommended are values ``0.005 < bw < 0.4``.
-
-    tol: float
+    tol: float (default ``1e-10``)
         Round to zero absolute values smaller than ``tol``, after convolutions.
 
-    conv_method: str
+    conv_method: str (default ``auto``)
         A string indicating which method to use to calculate the convolution.
         docs.scipy.org/doc/scipy/reference/generated/scipy.signal.convolve.
+
+    verbose: bool (default ``False``)
+        If ``True`` will report on the bandwidth used.
 
     Returns
     -------
@@ -83,10 +86,8 @@ def moments(timeseries: np.ndarray, bw: float=None, bins: np.ndarray=None,
     if len(timeseries.shape) == 1:
         timeseries = timeseries.reshape(-1, 1)
 
-    assert len(timeseries.shape) == 2, "Timeseries must (n, dims) shape"
+    assert len(timeseries.shape) == 2, "Timeseries must be 1-dimensional"
     assert timeseries.shape[0] > 0, "No data in timeseries"
-
-    n, dims = timeseries.shape
 
     if bins is None:
         bins = np.array([5000])
@@ -98,21 +99,22 @@ def moments(timeseries: np.ndarray, bw: float=None, bins: np.ndarray=None,
     if len(powers.shape) == 1:
         powers = powers.reshape(-1, 1)
 
-    assert (powers[0] == [0] * dims).all(), "First power must be zero"
-    assert dims == powers.shape[1], "Powers not matching timeseries' dimension"
-    assert dims == bins.shape[0], "Bins not matching timeseries' dimension"
-
     if bw is None:
-        bw = silvermans_rule(timeseries)*2.
+        bw = silvermans_rule(timeseries)
     elif callable(bw):
         bw = bw(timeseries)
+
     assert bw > 0.0, "Bandwidth must be > 0"
 
     if kernel is None:
         kernel = epanechnikov
     assert kernel in _kernels, "Kernel not found"
 
-    edges, moments =  _moments(timeseries, bins, powers, lag, kernel, bw, tol, conv_method)
+    if verbose == True:
+        print(r'bandwidth = {:f}'.format(bw) + r', bins = {:d}'.format(bins[0]))
+
+    edges, moments =  _moments(timeseries, bins, powers, lag, kernel, bw, tol,
+                                conv_method)
 
     if correction == True:
         moments = corrections(m = moments, power = power)
