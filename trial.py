@@ -23,7 +23,7 @@ xi = 2.5
 lamb = 1.75
 
 # and let jdprocess integrate the stochastic path
-X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
+X = jd.jd_process(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
 
 # %% Plot the trajectory of the jump-diffusion process
@@ -90,4 +90,4 @@ lamb_est = jd.jump_rate(moments = moments, xi_est = xi)
 # simply choose the desired power:
 power = 4
 
-jd.M_formula(power = power)
+jd.m_formula(power = power)
