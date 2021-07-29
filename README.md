@@ -13,7 +13,7 @@ With `JumpDiff` one can extract the parameters of a jump-diffusion process from 
 To install `JumpDiff`, run
 
 ```
-   pip install JumpDiff
+   pip install jumpdiff
 ```
 
 Then on your favourite editor just use
@@ -127,8 +127,7 @@ If you need help with the code, the theory, or the implementation, drop us an em
 We abide to a [Conduct of Fairness](contributions.md).
 
 # Changelog
-- Version 1.0 - releasing the first full version.
-- Version 0.4 - Designing a set of self-consistency checks, the documentation, examples, and a trial code.
+- Version 0.4 - Designing a set of self-consistency checks, the documentation, examples, and a trial code. Install using `pip`
 - Version 0.3 - Designing a straightforward procedure to retrieve the jump amplitude and jump rate functions, alongside with a easy `sympy` displaying the correction.
 - Version 0.2 - Introducing the second-order corrections to the moments
 - Version 0.1 - Design an implementation of the `moments` functions, generalising `kramersmoyal` `km`.

@@ -5,7 +5,7 @@ To install :code:`JumpDiff` simply use
 
 ::
 
-   pip install JumpDiff
+   pip install jumpdiff
 
 Then on your favourite editor just use
 

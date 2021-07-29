@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="JumpDiff",
-    version="1.0.1",
+    name="jumpdiff",
+    version="0.4.1",
     author="Leonardo Rydin Gorjão",
     author_email="leonardo.rydin@gmail.com",
     description="JumpDiff: Non-parametric estimators for jump-diffusion processes for Python.",
