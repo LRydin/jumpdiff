@@ -13,13 +13,13 @@ You can find a good review on this topic in Ref. 2.
 
 Integrating a jump-diffusion process
 ------------------------------------
-Let us use the functions in :code:`JumpDiff` to generate a jump-difussion process, and subsequently retrieve the parameters. This is a good way to understand the usage of the integrator and the non-parametric retrieval of the parameters.
+Let us use the functions in :code:`jumpdiff` to generate a jump-difussion process, and subsequently retrieve the parameters. This is a good way to understand the usage of the integrator and the non-parametric retrieval of the parameters.
 
 First we need to load our library. We will call it :code:`jd`
 
 .. code:: python
 
-   import JumpDiff as jd
+   import jumpdiff as jd
 
 Let us thus define a jump-diffusion process and use :code:`jdprocess` to integrate it. Do notice here that we need the drift :math:`a(x,t)` and diffusion :math:`b(x,t)` as functions.
 
@@ -53,7 +53,7 @@ This will generate a jump diffusion process :code:`X` of length :code:`int(10000
   :alt: A jump-difussion process
 
 
-Using :code:`JumpDiff` to retrieve the parameters
+Using :code:`jumpdiff` to retrieve the parameters
 -------------------------------------------------
 Moments and Kramers─Moyal coefficients
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

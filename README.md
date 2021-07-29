@@ -6,11 +6,11 @@
 [![Documentation Status](https://readthedocs.org/projects/jumpdiff/badge/?version=latest)](https://jumpdiff.readthedocs.io/en/latest/?badge=latest)
 
 # JumpDiff
-`JumpDiff` is a `python` library with non-parametric Nadaraya─Watson estimators to extract the parameters of jump-diffusion processes.
-With `JumpDiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseries.
+`jumpdiff` is a `python` library with non-parametric Nadaraya─Watson estimators to extract the parameters of jump-diffusion processes.
+With `jumpdiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseries.
 
 ## Installation
-To install `JumpDiff`, run
+To install `JumpDjumpdiffiff`, run
 
 ```
    pip install jumpdiff
@@ -19,7 +19,7 @@ To install `JumpDiff`, run
 Then on your favourite editor just use
 
 ```python
-   import JumpDiff as jd
+   import jumpdiff as jd
 ```
 
 ## Dependencies
@@ -39,13 +39,13 @@ which has 4 main elements: a drift term <img src="/Others/a_xt.png" title="drift
 You can find a good review on this topic in Ref. 2.
 
 ## Integrating a jump-diffusion process
-Let us use the functions in `JumpDiff` to generate a jump-difussion process, and subsequently retrieve the parameters. This is a good way to understand the usage of the integrator and the non-parametric retrieval of the parameters.
+Let us use the functions in `jumpdiff` to generate a jump-difussion process, and subsequently retrieve the parameters. This is a good way to understand the usage of the integrator and the non-parametric retrieval of the parameters.
 
 First we need to load our library. We will call it `jd`
 ```python
 import JumpDiff as jd
 ```
-Let us thus define a jump-diffusion process and use `jdprocess` to integrate it. Do notice here that we need the drift <img src="/Others/a_xt.png" title="drift term" height="18"/> and diffusion <img src="/Others/b_xt.png" title="diffusion term" height="18"/> as functions.
+Let us thus define a jump-diffusion process and use `jd_process` to integrate it. Do notice here that we need the drift <img src="/Others/a_xt.png" title="drift term" height="18"/> and diffusion <img src="/Others/b_xt.png" title="diffusion term" height="18"/> as functions.
 
 ```python
 # integration time and time sampling
@@ -72,7 +72,7 @@ This will generate a jump diffusion process `X` of length `int(10000/0.001)` wit
 
 <img src="/Others/X_trajectory.png" title="A jump-difussion process" height="200"/>
 
-## Using `JumpDiff` to retrieve the parameters
+## Using `jumpdiff` to retrieve the parameters
 ### Moments and Kramers─Moyal coefficients
 Take the timeseries `X` and use the function `moments` to retrieve the conditional moments of the process.
 For now let us focus on the shortest time lag, so we can best approximate the Kramers─Moyal coefficients.
@@ -135,7 +135,7 @@ We abide to a [Conduct of Fairness](contributions.md).
 # Literature and Support
 
 ### History
-This project was started in 2017 at the [neurophysik](https://www.researchgate.net/lab/Klaus-Lehnertz-Lab-2) by Leonardo Rydin Gorjão, Jan Heysel, Klaus Lehnertz, and M. Reza Rahimi Tabar, and separately by Pedro G. Lind, at the Department of Computer Science, Oslo Metropolitan University. Pedro, Leonardo, and Dirk developed in 2019 and 2020 a set of corrections and an implementation for python, presented here.
+This project was started in 2017 at the [neurophysik](https://www.researchgate.net/lab/Klaus-Lehnertz-Lab-2) by Leonardo Rydin Gorjão, Jan Heysel, Klaus Lehnertz, and M. Reza Rahimi Tabar, and separately by Pedro G. Lind, at the Department of Computer Science, Oslo Metropolitan University. From 2019 to 2021, Pedro G. Lind, Leonardo Rydin Gorjão, and Dirk Witthaut developed a set of corrections and an implementation for python, presented here.
 
 ### Funding
 Helmholtz Association Initiative _Energy System 2050 - A Contribution of the Research Field Energy_ and the grant No. VH-NG-1025 and *STORM - Stochastics for Time-Space Risk Models* project of the Research Council of Norway (RCN) No. 274410.

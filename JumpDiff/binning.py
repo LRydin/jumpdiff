@@ -9,7 +9,7 @@ import numpy as np
 
 def bincount1(x, weights, minlength=0):
     return np.array(
-        [np.bincount(x, w, minlength=minlength) for w in weights])
+        [np.bincount(x, w, minlength = minlength) for w in weights])
 
 def bincount2(x, weights, minlength=0):
     # Small speedup if # of weights is large
@@ -29,7 +29,8 @@ _range = range
 
 # An alternative to Numpy's histogramdd, supporting a weights matrix
 # Part of the following code is licensed under the BSD-3 License (from Numpy)
-def histogramdd(sample, bins=10, range=None, normed=None, weights=None, density=None, bw=0.0):
+def histogramdd(sample, bins=10, range=None, normed=None, weights=None,
+                density=None, bw=0.0):
 
     def _get_outer_edges(a, range, bw):
         """
@@ -43,7 +44,8 @@ def histogramdd(sample, bins=10, range=None, normed=None, weights=None, density=
                     'max must be larger than min in range parameter.')
             if not (np.isfinite(first_edge) and np.isfinite(last_edge)):
                 raise ValueError(
-                    "supplied range of [{}, {}] is not finite".format(first_edge, last_edge))
+                    "supplied range of [{}, {}] "
+                    " is not finite".format(first_edge, last_edge))
         elif a.size == 0:
             # handle empty arrays. Can't determine range, so use 0-1.
             first_edge, last_edge = 0, 1
@@ -51,7 +53,8 @@ def histogramdd(sample, bins=10, range=None, normed=None, weights=None, density=
             first_edge, last_edge = a.min() - bw, a.max() + bw
             if not (np.isfinite(first_edge) and np.isfinite(last_edge)):
                 raise ValueError(
-                    "autodetected range of [{}, {}] is not finite".format(first_edge, last_edge))
+                    "autodetected range of [{}, {}] "
+                    "is not finite".format(first_edge, last_edge))
 
         # expand empty range to avoid divide by zero
         if first_edge == last_edge:
@@ -78,8 +81,8 @@ def histogramdd(sample, bins=10, range=None, normed=None, weights=None, density=
         M = len(bins)
         if M != D:
             raise ValueError(
-                'The dimension of bins must be equal to the dimension of the '
-                ' sample x.')
+                "The dimension of bins must be equal to the dimension of the "
+                "sample x.")
     except TypeError:
         # bins is an integer
         bins = D * [bins]
@@ -88,25 +91,25 @@ def histogramdd(sample, bins=10, range=None, normed=None, weights=None, density=
     if range is None:
         range = (None,) * D
     elif len(range) != D:
-        raise ValueError('range argument must have one entry per dimension')
+        raise ValueError("range argument must have one entry per dimension")
 
     # Create edge arrays
     for i in _range(D):
         if np.ndim(bins[i]) == 0:
             if bins[i] < 1:
                 raise ValueError(
-                    '`bins[{}]` must be positive, when an integer'.format(i))
+                    "`bins[{}]` must be positive, when an integer".format(i))
             smin, smax = _get_outer_edges(sample[:, i], range[i], bw)
             edges[i] = np.linspace(smin, smax, bins[i] + 1)
         elif np.ndim(bins[i]) == 1:
             edges[i] = np.asarray(bins[i])
             if np.any(edges[i][:-1] > edges[i][1:]):
                 raise ValueError(
-                    '`bins[{}]` must be monotonically increasing, when an array'
+                    "`bins[{}]` must be monotonically increasing, when an array"
                     .format(i))
         else:
             raise ValueError(
-                '`bins[{}]` must be a scalar or 1d array'.format(i))
+                "`bins[{}]` must be a scalar or 1d array".format(i))
 
         nbin[i] = len(edges[i]) + 1  # includes an outlier on each end
         dedges[i] = np.diff(edges[i])
@@ -178,10 +181,9 @@ def histogramdd(sample, bins=10, range=None, normed=None, weights=None, density=
 
     if weights.ndim == 1:
         if (hist.shape != nbin - 2).any():
-            raise RuntimeError(
-                "Internal Shape Error")
+            raise RuntimeError("Internal Shape Error")
     else:
         if (hist.shape != np.array([weights.shape[0], *(nbin - 2)])).any():
-            raise RuntimeError(
-                "Internal Shape Error")
+            raise RuntimeError("Internal Shape Error")
+            
     return hist, edges

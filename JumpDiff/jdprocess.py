@@ -5,9 +5,9 @@
 
 import numpy as np
 
-def jdprocess(time: float, delta_t: float, a: callable, b: callable,
-        xi: float, lamb: float, init: float=None, solver: str='Euler',
-        b_prime: callable=None) -> np.ndarray:
+def jd_process(time: float, delta_t: float, a: callable, b: callable,
+        xi: float, lamb: float, init: float = None, solver: str = 'Euler',
+        b_prime: callable = None) -> np.ndarray:
     r"""
     Integrates a jump-diffusion process with drift a(x), diffusion b(x), jump
     amplitude xi (:math:`\xi`), and jump rate lamb (:math:`\lambda`).
