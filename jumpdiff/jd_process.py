@@ -17,11 +17,10 @@ def jd_process(time: float, delta_t: float, a: callable, b: callable,
        \mathrm{d} X(t) = a(x,t)\;\mathrm{d} t + b(x,t)\;\mathrm{d} W(t)
        + \xi\;\mathrm{d} J(t),
 
-    with :math:`J` Poisson with jump rate :math:`\lambda`.
-
-    This integrator has both an Euler─Mayurama and a Milstein method of
-    integration. For Milstein one has to introduce the derivative of the
-    diffusion term ``b``, denoted ``b_prime``.
+    with :math:`J` Poisson with jump rate :math:`\lambda`. This integrator has
+    both an Euler─Maruyama and a Milstein method of integration. For Milstein
+    one has to introduce the derivative of the diffusion term ``b``, denoted
+    ``b_prime``.
 
     Parameters
     ----------
