@@ -10,7 +10,7 @@
 With `jumpdiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseries.
 
 ## Installation
-To install `JumpDjumpdiffiff`, run
+To install `jumpdiff`, run
 
 ```
    pip install jumpdiff
@@ -43,7 +43,7 @@ Let us use the functions in `jumpdiff` to generate a jump-difussion process, and
 
 First we need to load our library. We will call it `jd`
 ```python
-import JumpDiff as jd
+import jumpdiff as jd
 ```
 Let us thus define a jump-diffusion process and use `jd_process` to integrate it. Do notice here that we need the drift <img src="/Others/a_xt.png" title="drift term" height="18"/> and diffusion <img src="/Others/b_xt.png" title="diffusion term" height="18"/> as functions.
 
