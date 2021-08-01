@@ -1,7 +1,7 @@
 ![PyPI - License](https://img.shields.io/pypi/l/JumpDiff)
 ![PyPI](https://img.shields.io/pypi/v/JumpDiff)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/JumpDiff)
-[![Build Status](https://travis-ci.org/LRydin/JumpDiff.svg?branch=master)](https://travis-ci.org/LRydin/JumpDiff)
+[![Build Status](https://github.com/LRydin/JumpDiff/actions/workflows/CI.yml/badge.svg)](https://github.com/LRydin/JumpDiff/actions/workflows/CI.yml)
 [![codecov](https://codecov.io/gh/LRydin/JumpDiff/branch/master/graph/badge.svg)](https://codecov.io/gh/LRydin/JumpDiff)
 [![Documentation Status](https://readthedocs.org/projects/jumpdiff/badge/?version=latest)](https://jumpdiff.readthedocs.io/en/latest/?badge=latest)
 
