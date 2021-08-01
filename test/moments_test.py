@@ -1,5 +1,5 @@
 import numpy as np
-from JumpDiff import jdprocess, moments
+from jumpdiff import jd_process, moments
 
 def test_moments():
     for delta in [1,0.1,0.01,0.001]:
@@ -20,7 +20,7 @@ def test_moments():
             xi = 1.5
             lamb = 1.25
 
-            X = jdprocess(t_final, delta_t, a = a, b = b, xi = xi, lamb = lamb)
+            X = jd_process(t_final, delta_t, a = a, b = b, xi = xi, lamb = lamb)
 
             edges, m = moments(timeseries = X, lag = lag)
 

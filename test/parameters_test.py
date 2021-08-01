@@ -1,5 +1,5 @@
 import numpy as np
-from JumpDiff import jdprocess, jump_amplitude, jump_rate, moments
+from jumpdiff import jd_process, jump_amplitude, jump_rate, moments
 
 def test_parameters():
     for delta in [1,0.1,0.01,0.001,0.0001]:
@@ -20,7 +20,7 @@ def test_parameters():
             lamb = 1.25
 
             # and simply call the integration function
-            X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
+            X = jd_process(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
             edges, m = moments(timeseries = X)
 

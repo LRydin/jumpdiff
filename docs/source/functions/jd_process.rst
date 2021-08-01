@@ -1,7 +1,7 @@
 Jump-diffusion timeseries generator
 -----------------------------------
 
-.. currentmodule:: JumpDiff.jdprocess
+.. currentmodule:: jumpdiff.jd_process
 
-.. automodule:: JumpDiff.jdprocess
+.. automodule:: jumpdiff.jd_process
    :members:

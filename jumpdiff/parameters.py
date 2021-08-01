@@ -4,8 +4,8 @@
 
 import numpy as np
 
-def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
-        full: bool=False, verbose: bool=True) -> np.ndarray:
+def jump_amplitude(moments: np.ndarray, tol: float = 1e-10,
+        full: bool = False, verbose: bool = False) -> np.ndarray:
     r"""
     Retrieves the jump amplitude xi (:math:`\xi`) via
 
@@ -73,8 +73,9 @@ def jump_amplitude(moments: np.ndarray, tol: float=1e-10,
         return xi_est
 
 
-def jump_rate(moments: np.ndarray, xi_est: np.ndarray=None, tol: float=1e-10,
-        full: bool=False, verbose: bool=True) -> np.ndarray:
+def jump_rate(moments: np.ndarray, xi_est: np.ndarray = None,
+              tol: float = 1e-10, full: bool = False,
+              verbose: bool = False) -> np.ndarray:
     r"""
     Retrieves the jump rate lamb (:math:`\lambda`) via
 
@@ -139,7 +140,8 @@ def jump_rate(moments: np.ndarray, xi_est: np.ndarray=None, tol: float=1e-10,
                             weights=moments[0,~mask,i])
 
     if verbose == True:
-        print(r'λ = {:f}'.format(lamb_est[i]) + r' ± {:f}'.format(lamb_est_std[i]))
+        print((r'λ = {:f}'.format(lamb_est[i]) +
+               r' ± {:f}'.format(lamb_est_std[i])))
 
     if full == True:
         return lamb_est, lamb_est_std

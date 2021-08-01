@@ -14,10 +14,10 @@ from scipy.special import factorial
 from .binning import histogramdd
 from .kernels import silvermans_rule, epanechnikov, _kernels
 
-def moments(timeseries: np.ndarray, bw: float=None, bins: np.ndarray=None,
-        power: int=6, lag: list=[1], correction: bool=True, norm: bool=False,
-        kernel: callable=None, tol: float=1e-10, conv_method: str='auto',
-        verbose: bool=False) -> np.ndarray:
+def moments(timeseries: np.ndarray, bw: float = None, bins: np.ndarray = None,
+        power: int = 6, lag: list = [1], correction: bool = True,
+        norm: bool = False, kernel: callable = None, tol: float = 1e-10,
+        conv_method: str = 'auto', verbose: bool = False) -> np.ndarray:
     r"""
     Estimates the moments of the Kramers─Moyal expansion from a timeseries using
     a Nadaraya─Watson kernel estimator method. These later can be turned into
@@ -133,6 +133,7 @@ def _moments(timeseries: np.ndarray, bins: np.ndarray, powers: np.ndarray,
     Helper function for km that does the heavy lifting and actually estimates
     the Kramers─Moyal coefficients from the timeseries.
     """
+
     def cartesian_product(arrays: np.ndarray):
         # Taken from https://stackoverflow.com/questions/11144513
         la = len(arrays)
@@ -177,11 +178,12 @@ def _moments(timeseries: np.ndarray, bins: np.ndarray, powers: np.ndarray,
         weights = np.prod(np.power(grads.T, powers[..., None]), axis=1)
 
         # Get weighted histogram
-        hist, edges = histogramdd(ts[:-1, ...], bins=bins,
-                                  weights=weights, bw=bw)
+        hist, edges = histogramdd(ts[:-1, ...], bins=bins, weights=weights,
+                                  bw=bw)
 
         # Convolve weighted histogram with kernel and trim it
-        kmc = convolve(hist, kernel_[None, ...], mode='same', method=conv_method)
+        kmc = convolve(hist, kernel_[None, ...], mode='same',
+                       method=conv_method)
 
         # Normalise
         mask = np.abs(kmc[0]) < tol
@@ -195,7 +197,7 @@ def _moments(timeseries: np.ndarray, bins: np.ndarray, powers: np.ndarray,
 
     return edge_, moments
 
-def corrections(m, power):
+def corrections(m: np.ndarray, power: int):
     r"""
     The moments function will by default apply the corrections. You can turn
     the corrections off in that fuction by setting ``corrections = False``.
@@ -242,7 +244,7 @@ def corrections(m, power):
         the order according to powers, ``j`` the lag (if any introduced).
     """
 
-    powers = np.linspace(0,power,power+1).astype(int)
+    powers = np.linspace(0, power, power + 1).astype(int)
     if len(powers.shape) == 1:
         powers = powers.reshape(-1, 1)
 

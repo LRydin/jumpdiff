@@ -1,7 +1,7 @@
 Formulae
 --------
 
-.. currentmodule:: JumpDiff.formulae
+.. currentmodule:: jumpdiff.formulae
 
-.. automodule:: JumpDiff.formulae
+.. automodule:: jumpdiff.formulae
    :members:

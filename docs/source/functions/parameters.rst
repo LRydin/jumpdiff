@@ -1,7 +1,7 @@
 Parameters
 ----------
 
-.. currentmodule:: JumpDiff.parameters
+.. currentmodule:: jumpdiff.parameters
 
-.. automodule:: JumpDiff.parameters
+.. automodule:: jumpdiff.parameters
    :members:

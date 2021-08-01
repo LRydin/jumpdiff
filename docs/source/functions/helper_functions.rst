@@ -4,7 +4,7 @@ Helping functions
 Kernels function
 ^^^^^^^^^^^^^^^^
 
-.. currentmodule:: JumpDiff.kernels
+.. currentmodule:: jumpdiff.kernels
 
-.. automodule:: JumpDiff.kernels
+.. automodule:: jumpdiff.kernels
    :members:

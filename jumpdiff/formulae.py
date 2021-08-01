@@ -2,7 +2,7 @@
 
 from sympy import bell, symbols, factorial, simplify
 
-def M_formula(power, tau = True):
+def m_formula(power, tau = True):
     r"""
     Generate the formula for the conditional moments with second-order
     corrections based on the relation with the ordinary Bell polynomials
@@ -37,7 +37,7 @@ def M_formula(power, tau = True):
 
     return term
 
-def F_formula(power):
+def f_formula(power):
     r"""
     Generate the formula for the conditional moments with second-order
     corrections based on the relation with the ordinary Bell polynomials
@@ -70,7 +70,7 @@ def F_formula(power):
     return term
 
 
-def F_formula_solver(power):
+def f_formula_solver(power):
     r"""
     Generate the reciprocal relation of the moments to the Kramers─Moyal
     coefficients by sequential iteration.
@@ -95,7 +95,7 @@ def F_formula_solver(power):
     power = power + 1
     terms_to_sub = []
     for i in range(1, power):
-        terms_to_sub += [F_formula(i)]
+        terms_to_sub += [f_formula(i)]
         for j in range(i):
             terms_to_sub[i-1] = terms_to_sub[i-1].subs('D'+str(j+1),terms_to_sub[j])
 

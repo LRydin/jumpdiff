@@ -1,7 +1,7 @@
 Moments
 -------
 
-.. currentmodule:: JumpDiff.moments
+.. currentmodule:: jumpdiff.moments
 
-.. automodule:: JumpDiff.moments
+.. automodule:: jumpdiff.moments
    :members:

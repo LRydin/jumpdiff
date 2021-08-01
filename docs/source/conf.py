@@ -20,21 +20,22 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'JumpDiff'
-copyright = '2020, Leonardo Rydin Gorjão'
+copyright = '2019-2021, Leonardo Rydin Gorjão'
 author = 'Leonardo Rydin Gorjão'
 
 # The full version, including alpha/beta/rc tags
-release = '0.4'
-version = '0.4'
-
-
+release = '0.4.1'
+version = '0.4.1'
 
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon']
+extensions = ['sphinx.ext.napoleon',
+              'sphinx.ext.autodoc',
+              'sphinx.ext.coverage',
+             ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -82,7 +83,7 @@ html_theme_options = {
     # Toc options
     'collapse_navigation': True,
     'sticky_navigation': True,
-    'navigation_depth': 4,
+    'navigation_depth': 3,
     'titles_only': False
 }
 

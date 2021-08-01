@@ -1,5 +1,5 @@
 import numpy as np
-from JumpDiff import jdprocess
+from jumpdiff import jd_process
 
 def test_jdprocess():
     for delta in [1,0.1,0.01,0.001,0.0001]:
@@ -23,10 +23,10 @@ def test_jdprocess():
             xi = 1.5
             lamb = 1.25
             if scheme == 'Euler':
-                X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
+                X = jd_process(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
             if scheme == 'Milstein':
-                X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb,
+                X = jd_process(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb,
                         b_prime=b_prime, init= 0., solver = scheme)
 
             assert isinstance(X, np.ndarray)

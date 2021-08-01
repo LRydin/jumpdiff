@@ -1,17 +1,17 @@
 Functions
 =========
 
-.. currentmodule:: JumpDiff
+.. currentmodule:: jumpdiff
 
-Documentation for all the functions in :code:`JumpDiff`.
+Documentation for all the functions in :code:`jumpdiff`.
 
-.. include:: jdprocess.rst
+.. include:: jd_process.rst
 
 .. include:: moments.rst
 
 .. include:: parameters.rst
 
-.. include:: Q_ratio.rst
+.. include:: q_ratio.rst
 
 .. include:: formulae.rst
 

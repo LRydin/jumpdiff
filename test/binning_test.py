@@ -1,8 +1,8 @@
-# Addapted from 'kramersmoyal' for JumpDiff
+# Addapted from 'kramersmoyal' for jumpdiff
 
 import numpy as np
 
-from JumpDiff.binning import histogramdd
+from jumpdiff.binning import histogramdd
 
 N = 1000000
 
