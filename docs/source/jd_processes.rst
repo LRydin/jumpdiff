@@ -21,7 +21,7 @@ First we need to load our library. We will call it :code:`jd`
 
    import jumpdiff as jd
 
-Let us thus define a jump-diffusion process and use :code:`jdprocess` to integrate it. Do notice here that we need the drift :math:`a(x,t)` and diffusion :math:`b(x,t)` as functions.
+Let us thus define a jump-diffusion process and use :code:`jd_process` to integrate it. Do notice here that we need the drift :math:`a(x,t)` and diffusion :math:`b(x,t)` as functions.
 
 .. code:: python
 
@@ -42,7 +42,7 @@ Let us thus define a jump-diffusion process and use :code:`jdprocess` to integra
    lamb = 1.75
 
    # and simply call the integration function
-   X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
+   X = jd.jd_process(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
 
 This will generate a jump diffusion process :code:`X` of length :code:`int(10000/0.001)` with the given parameters.

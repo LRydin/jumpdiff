@@ -1,5 +1,5 @@
 import numpy as np
-from JumpDiff import Qratio, jdprocess
+from jumpdiff import q_ratio, jd_process
 
 def test_Qratio():
     for delta in [1,0.1,0.01,0.001,0.0001]:
@@ -19,11 +19,11 @@ def test_Qratio():
         lamb = 1.25
 
         # and simply call the integration function
-        X = jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
+        X = jd_process(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 
         lag = np.unique(np.logspace(0, np.log10(int(t_final/delta_t) // 100), 200).astype(int)+1)
 
-        _, ratio = Qratio(lag = lag, timeseries = X)
+        _, ratio = q_ratio(lag = lag, timeseries = X)
 
         assert isinstance(ratio, np.ndarray)
         assert ratio.shape[0] == lag.shape[0]

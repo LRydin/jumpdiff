@@ -3,7 +3,7 @@
 import numpy as np
 from itertools import product
 
-from JumpDiff.kernels import *
+from jumpdiff.kernels import *
 
 def test_kernels():
     for dim in [1]:
