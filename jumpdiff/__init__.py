@@ -7,6 +7,6 @@ from .formulae import m_formula, f_formula, f_formula_solver
 
 name = "jumpdiff"
 
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 __author__ = "Leonardo Rydin Gorjão"
 __copyright__ = "Copyright 2019-2021 Leonardo Rydin Gorjão, MIT License"

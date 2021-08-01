@@ -65,7 +65,7 @@ xi = 2.5
 lamb = 1.75
 
 # and simply call the integration function
-X = jd.jdprocess(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
+X = jd.jd_process(t_final, delta_t, a=a, b=b, xi=xi, lamb=lamb)
 ```
 
 This will generate a jump diffusion process `X` of length `int(10000/0.001)` with the given parameters.
@@ -127,7 +127,7 @@ If you need help with the code, the theory, or the implementation, drop us an em
 We abide to a [Conduct of Fairness](contributions.md).
 
 # Changelog
-- Version 0.4 - Designing a set of self-consistency checks, the documentation, examples, and a trial code. Install using `pip`
+- Version 0.4 - Designing a set of self-consistency checks, the documentation, examples, and a trial code. Code at PyPi.
 - Version 0.3 - Designing a straightforward procedure to retrieve the jump amplitude and jump rate functions, alongside with a easy `sympy` displaying the correction.
 - Version 0.2 - Introducing the second-order corrections to the moments
 - Version 0.1 - Design an implementation of the `moments` functions, generalising `kramersmoyal` `km`.

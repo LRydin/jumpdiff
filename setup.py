@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="jumpdiff",
-    version="0.4.1",
+    version="0.4.2",
     author="Leonardo Rydin Gorjão",
     author_email="leonardo.rydin@gmail.com",
     description="JumpDiff: Non-parametric estimators for jump-diffusion processes for Python.",
