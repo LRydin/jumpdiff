@@ -8,7 +8,7 @@ import jumpdiff as jd
 # Define:
 # integration time and time sampling
 t_final = 10000
-delta_t = 0.001
+delta_t = 0.01
 
 # A drift function
 def a(x):
@@ -78,10 +78,11 @@ ax.legend(fontsize=13)
 # %% Finally, we can use simply the 'jump_amplitude' and 'jump_rate' functions
 # to recover the ξ and λ parameters
 
-xi_est = jd.jump_amplitude(moments = moments)
+xi_est = jd.jump_amplitude(moments = moments, verbose = True)
+print(xi_est)
 
-lamb_est = jd.jump_rate(moments = moments, xi_est = xi)
-
+lamb_est = jd.jump_rate(moments = moments, xi_est = xi, verbose = True)
+print(lamb_est/delta_t)
 # Don't forget that the jump rate λ needs to be divide by 'delta_t' to yield a
 # comparible result.
 
