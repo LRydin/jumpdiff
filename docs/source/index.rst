@@ -12,6 +12,8 @@ With :code:`jumpdiff` one can extract the parameters of a jump-diffusion process
 
 .. include:: jd_processes.rst
 
+.. include:: q_ratio_exp.rst
+
 Table of Content
 ================
 
@@ -20,6 +22,7 @@ Table of Content
 
    installation
    jd_processes
+   q_ratio_exp
    functions/index
    license
 

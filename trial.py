@@ -86,6 +86,47 @@ print(lamb_est/delta_t)
 # Don't forget that the jump rate λ needs to be divide by 'delta_t' to yield a
 # comparible result.
 
+# %% #########################################################################
+
+# To understand the usage of the q_ratio function, let us generate to sample
+# trajectories: one without jumps, denoted d_timeseries, and one with jumps
+# denoted j_timeseries.
+
+# integration time and time sampling
+t_final = 10000
+delta_t = 0.01
+
+# Drift function
+def a(x):
+    return -0.5*x
+
+# Diffusion function
+def b(x):
+    return 0.75
+
+# generate 2 trajectories
+d_timeseries = jd.jd_process(t_final, delta_t, a=a, b=b, xi=0, lamb=0)
+j_timeseries = jd.jd_process(t_final, delta_t, a=a, b=b, xi=2.5, lamb=1.75)
+
+# %% Subsequently we time a time scale to analyse, as
+lag = np.logspace(0, 3, 25, dtype=int)
+
+d_lag, d_Q = jd.q_ratio(lag, d_timeseries)
+j_lag, j_Q = jd.q_ratio(lag, j_timeseries)
+
+# %% we can then finally plot the results
+fig, ax = plt.subplots(1,1,figsize=(6,3))
+
+ax.loglog(d_lag, d_Q, '-', color = 'black', label='diffusion')
+ax.loglog(j_lag, j_Q, 'o-', color = 'black', label='jump-diffusion')
+# ax.set_xlim([-5,5]); ax.set_ylim([-5,5])
+
+ax.set_xlabel('lag', fontsize=16)
+ax.set_ylabel('$Q$-ratio', fontsize=16)
+ax.legend(fontsize=13)
+
+fig.tight_layout()
+fig.savefig('q_ratio.png', dpi=300)
 
 # %% If one wishes to check the formulae behind the corrections of the moments,
 # simply choose the desired power:
