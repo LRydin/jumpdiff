@@ -1,5 +1,9 @@
 Jump-diffusion processes
 ========================
+
+We will show here how to: (1) generate trajectories of jump-diffusion processes; (2) retrieve the parameters from a single trajectory of a jump-diffusion process.
+Naturally, if we already had some data -- maybe from a real-world recording of a stochastic process -- we would simply look at estimating the parameters for this process.
+
 The theory
 ----------
 Jump-diffusion processes\ :sup:`1`, as the name suggest, are a mixed type of stochastic processes with a diffusive and a jump term.
@@ -17,13 +21,16 @@ Let us use the functions in :code:`jumpdiff` to generate a jump-difussion proces
 
 First we need to load our library. We will call it :code:`jd`
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
    import jumpdiff as jd
 
 Let us thus define a jump-diffusion process and use :code:`jd_process` to integrate it. Do notice here that we need the drift :math:`a(x,t)` and diffusion :math:`b(x,t)` as functions.
 
-.. code:: python
+.. code-block:: python
+   :linenos:
+   :lineno-start: 2
 
    # integration time and time sampling
    t_final = 10000
@@ -61,30 +68,41 @@ Take the timeseries :code:`X` and use the function :code:`moments` to retrieve t
 For now let us focus on the shortest time lag, so we can best approximate the Kramers---Moyal coefficients.
 For this case we can simply employ
 
-.. code:: python
+.. code-block:: python
+   :linenos:
+   :lineno-start: 20
 
    edges, moments = jd.moments(timeseries = X)
 
 In the array :code:`edges` are the limits of our space, and in our array :code:`moments` are recorded all 6 powers/order of our conditional moments.
 Let us take a look at these before we proceed, to get acquainted with them.
 
-We can plot the first moment with any conventional plotter, so lets use here :code:`plotly` from :code:`matplotlib`
+We can plot the first moment with any conventional plotter, so lets use here :code:`plotly` from :code:`matplotlib`.
+To visualise the first moment, simply use
+
+.. code-block:: python
+   :linenos:
+   :lineno-start: 21
+
+   import matplotlib.pyplot as plt
+   plt.plot(edges, moments[1]/delta_t)
 
 .. image:: /_static/1_moment.png
   :height: 250
   :align: center
   :alt: The 1st Kramers---Moyal coefficient
 
-The first moment here (i.e., the first Kramers---Moyal coefficient) is given solely by the drift term that we have selected :code:`-0.5*x`
+The first moment here (i.e., the first Kramers---Moyal coefficient) is given solely by the drift term that we have selected :code:`-0.5*x`.
+In the plot we have also included the theoretical curve, which we know from having selected the value of :code:`a(x)` in line :code:`8`.
 
-And the second moment (i.e., the second Kramers---Moyal coefficient) is a mixture of both the contributions of the diffusive term :math:`b(x)` and the jump terms :math:`\xi` and :math:`\lambda`.
+Similarly, we can extract the second moment (i.e., the second Kramers---Moyal coefficient) is a mixture of both the contributions of the diffusive term :math:`b(x)` and the jump terms :math:`\xi` and :math:`\lambda`.
 
 .. image:: /_static/2_moment.png
   :height: 250
   :align: center
   :alt: The 2nd Kramers---Moyal coefficient
 
-You have this stored in :code:`moments[2,...]`.
+You have this stored in :code:`moments[2]`.
 
 Retrieving the jump-related terms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -92,7 +110,9 @@ Naturally one of the most pertinent questions when addressing jump-diffusion pro
 
 After having the :code:`moments` in hand, all we need is
 
-.. code:: python
+.. code-block:: python
+   :linenos:
+   :lineno-start: 23
 
    # first estimate the jump amplitude
    xi_est = jd.jump_amplitude(moments = moments)
@@ -101,9 +121,4 @@ After having the :code:`moments` in hand, all we need is
    lamb_est = jd.jump_rate(moments = moments)
 
 which resulted in our case in :code:`(xi_est) ξ = 2.43 ± 0.17` and :code:`(lamb_est) λ = 1.744 * delta_t` (don't forget to divide :code:`lamb_est` by :code:`delta_t`)!
-
-Other functions and options
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Include in this package is also the `Milstein scheme <https://en.wikipedia.org/wiki/Milstein_method>`_ of integration, particularly important when the diffusion term has some spacial :code:`x` dependence. :code:`moments` can actually calculate the conditional moments for different lags, using the parameter :code:`lag`.
-
-In :code:`formulae` the set of formulas needed to calculate the second order corrections are given (in :code:`sympy`).
+We can compare these with our chose values in lines :code:`15-16`.

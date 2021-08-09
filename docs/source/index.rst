@@ -5,12 +5,14 @@ JumpDiff
    :maxdepth: 3
 
 
-:code:`JumpDiff` is a :code:`python` library with non-parametric Nadaraya---Watson estimators to extract the parameters of jump-diffusion processes.
-With `JumpDiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseries.
+:code:`jumpdiff` is a :code:`python` library with non-parametric Nadaraya---Watson estimators to extract the parameters of jump-diffusion processes.
+With :code:`jumpdiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseries.
 
 .. include:: installation.rst
 
 .. include:: jd_processes.rst
+
+.. include:: q_ratio_exp.rst
 
 Table of Content
 ================
@@ -20,6 +22,7 @@ Table of Content
 
    installation
    jd_processes
+   q_ratio_exp
    functions/index
    license
 
