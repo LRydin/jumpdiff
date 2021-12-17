@@ -1,7 +1,7 @@
 # Contributions
-JumpDiff has lived so far out of collaborations. We welcome reviews and
+jumpdiff has lived so far out of collaborations. We welcome reviews and
 ideas from everyone. If you want to share your ideas or report a bug, open an
-[issue](https://github.com/LRydin/JumpDiff/issues) here on GitHub, or
+[issue](https://github.com/LRydin/jumpdiff/issues) here on GitHub, or
 contact us directly: [leonardo.rydin"at"gmail.com](mailto:leonardo.rydin@gmail.com)
 
 We are happy to have you join us in furthering this project, helping us improve

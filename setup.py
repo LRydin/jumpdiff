@@ -8,10 +8,10 @@ setuptools.setup(
     version="0.4.2",
     author="Leonardo Rydin Gorjão",
     author_email="leonardo.rydin@gmail.com",
-    description="JumpDiff: Non-parametric estimators for jump-diffusion processes for Python.",
+    description="jumpdiff: Non-parametric estimators for jump-diffusion processes for Python.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/LRydin/JumpDiff",
+    url="https://github.com/LRydin/jumpdiff",
     packages=setuptools.find_packages(),
     install_requires=[
         "numpy",

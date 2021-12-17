@@ -1,11 +1,11 @@
-![PyPI - License](https://img.shields.io/pypi/l/JumpDiff)
-![PyPI](https://img.shields.io/pypi/v/JumpDiff)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/JumpDiff)
-[![Build Status](https://github.com/LRydin/JumpDiff/actions/workflows/CI.yml/badge.svg)](https://github.com/LRydin/JumpDiff/actions/workflows/CI.yml)
-[![codecov](https://codecov.io/gh/LRydin/JumpDiff/branch/master/graph/badge.svg)](https://codecov.io/gh/LRydin/JumpDiff)
+![PyPI - License](https://img.shields.io/pypi/l/jumpdiff)
+![PyPI](https://img.shields.io/pypi/v/jumpdiff)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/jumpdiff)
+[![Build Status](https://github.com/LRydin/jumpdiff/actions/workflows/CI.yml/badge.svg)](https://github.com/LRydin/jumpdiff/actions/workflows/CI.yml)
+[![codecov](https://codecov.io/gh/LRydin/jumpdiff/branch/master/graph/badge.svg)](https://codecov.io/gh/LRydin/jumpdiff)
 [![Documentation Status](https://readthedocs.org/projects/jumpdiff/badge/?version=latest)](https://jumpdiff.readthedocs.io/en/latest/?badge=latest)
 
-# JumpDiff
+# jumpdiff
 `jumpdiff` is a `python` library with non-parametric Nadaraya─Watson estimators to extract the parameters of jump-diffusion processes.
 With `jumpdiff` one can extract the parameters of a jump-diffusion process from one-dimensional timeseries, employing both a kernel-density estimation method combined with a set on second-order corrections for a precise retrieval of the parameters for short timeseries.
 
@@ -122,7 +122,7 @@ Include in this package is also the [Milstein scheme](https://en.wikipedia.org/w
 In `formulae` the set of formulas needed to calculate the second order corrections are given (in `sympy`).
 
 # Contributions
-We welcome reviews and ideas from everyone. If you want to share your ideas, upgrades, doubts, or simply report a bug, open an [issue](https://github.com/LRydin/JumpDiff/issues) here on GitHub, or contact us directly.
+We welcome reviews and ideas from everyone. If you want to share your ideas, upgrades, doubts, or simply report a bug, open an [issue](https://github.com/LRydin/jumpdiff/issues) here on GitHub, or contact us directly.
 If you need help with the code, the theory, or the implementation, drop us an email.
 We abide to a [Conduct of Fairness](contributions.md).
 

@@ -1,4 +1,4 @@
-JumpDiff
+jumpdiff
 ========
 
 .. toctree::

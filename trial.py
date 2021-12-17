@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# This is a short python script to play around with JumpDiff
+# This is a short python script to play around with jumpdiff
 import jumpdiff as jd
 
 # %% Let's first integrate a jump-diffusion process
