@@ -88,17 +88,17 @@ def jd_process(time: float, delta_t: float, a: callable, b: callable,
 
     # randomise initial starting value or use given (after assert)
     if init is None:
-        X[0] = np.random.normal(loc = 0, scale = np.sqrt(delta_t), size = 1)
+        X[0] = np.random.normal(loc=0, scale=np.sqrt(delta_t), size=1)
     else:
         assert isinstance(init, int) or isinstance(init, float), ("'init' is "
             "not an int or float")
         X[0] = float(init)
 
     # Generate the Gaussian noise
-    dw = np.random.normal(loc = 0, scale = np.sqrt(delta_t), size = length)
+    dw = np.random.normal(loc=0, scale=np.sqrt(delta_t), size=length)
 
     # Generate the Poissonian Jumps
-    dJ = np.random.poisson(lam = lamb * delta_t, size = length)
+    dJ = np.random.poisson(lam=lamb * delta_t, size=length)
 
 
     # Integration, either Euler
@@ -106,7 +106,8 @@ def jd_process(time: float, delta_t: float, a: callable, b: callable,
         for i in range(1, length):
             X[i] = X[i-1] + a(X[i-1]) * delta_t + b(X[i-1]) * dw[i]
             if dJ[i] > 0.:
-                X[i] += dJ[i] * np.random.normal(loc = 0, scale = np.sqrt(xi))
+                # correction by @JChonpca_Huang (issue #5)
+                X[i] += np.sum(np.random.normal(0, np.sqrt(xi), size=dJ[i]))
 
     if solver == 'Milstein':
         # Generate corrective terms of the Milstein integration method
@@ -116,6 +117,7 @@ def jd_process(time: float, delta_t: float, a: callable, b: callable,
             X[i] = X[i-1] + a(X[i-1]) * delta_t + b(X[i-1]) * dw[i] \
                     + b(X[i-1]) * b_prime(X[i-1]) * dw_2[i]
             if dJ[i] > 0.:
-                X[i] += dJ[i] * np.random.normal(loc = 0, scale = np.sqrt(xi))
+                # correction by @JChonpca_Huang (issue #5)
+                X[i] += np.sum(np.random.normal(0, np.sqrt(xi), size=dJ[i]))
 
     return X
